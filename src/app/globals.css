@@ -1,8 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Umbrella Design System Colors */
+  --color-primary: #208C85;
+  --color-primary-hover: #1A7472;
+  --color-text: #134252;
+  --color-text-secondary: #626C71;
+  --color-background: #FCFCF9;
+  --color-surface: #FFFFFE;
+  --color-border: #D5D5D1;
+  --color-success: #2BB669;
+  --color-error: #C0152F;
+
+  /* Legacy Next.js variables */
+  --background: #FCFCF9;
+  --foreground: #134252;
 }
 
 @theme inline {
@@ -10,17 +22,32 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Umbrella Design Tokens */
+  --color-primary: #208C85;
+  --color-primary-hover: #1A7472;
+  --color-text: #134252;
+  --color-text-secondary: #626C71;
+  --color-background: #FCFCF9;
+  --color-surface: #FFFFFE;
+  --color-border: #D5D5D1;
+  --color-success: #2BB669;
+  --color-error: #C0152F;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --color-background: #1F2121;
+    --color-surface: #262828;
+    --color-text: #F5F5F5;
+    --color-text-secondary: #A7A9A9;
+    --color-border: #404040;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
 }
