@@ -1,7 +1,5 @@
 'use client';
 
-'use client';
-
 import { useState, useEffect } from 'react';
 import Button from './Button';
 
@@ -36,7 +34,7 @@ export default function Navigation() {
           <div className="flex-shrink-0">
             <button
               onClick={() => scrollToSection('hero')}
-              className="text-2xl font-bold text-[--color-primary] hover:text-[--color-primary-hover] transition-colors"
+              className="text-2xl font-bold text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] transition-colors"
             >
               Umbrella
             </button>
@@ -47,19 +45,19 @@ export default function Navigation() {
             <div className="ml-10 flex items-baseline space-x-8">
               <button
                 onClick={() => scrollToSection('features')}
-                className="text-[--color-text-secondary] hover:text-[--color-text] px-3 py-2 text-sm font-medium transition-colors"
+                className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] px-3 py-2 text-sm font-medium transition-colors"
               >
                 Features
               </button>
               <button
                 onClick={() => scrollToSection('how-it-works')}
-                className="text-[--color-text-secondary] hover:text-[--color-text] px-3 py-2 text-sm font-medium transition-colors"
+                className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] px-3 py-2 text-sm font-medium transition-colors"
               >
                 How It Works
               </button>
               <button
                 onClick={() => scrollToSection('roadmap')}
-                className="text-[--color-text-secondary] hover:text-[--color-text] px-3 py-2 text-sm font-medium transition-colors"
+                className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] px-3 py-2 text-sm font-medium transition-colors"
               >
                 Roadmap
               </button>
@@ -80,7 +78,7 @@ export default function Navigation() {
           <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-[--color-text-secondary] hover:text-[--color-text] hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[--color-primary]"
+              className="inline-flex items-center justify-center p-2 rounded-md text-[var(--color-text-secondary)] hover:text-[var(--color-text)] hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[var(--color-primary)]"
             >
               <svg
                 className="block h-6 w-6"
@@ -101,27 +99,27 @@ export default function Navigation() {
 
       {/* Mobile menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-[--color-border]">
+        <div className="md:hidden bg-white border-t border-[var(--color-border)]">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <button
               onClick={() => scrollToSection('features')}
-              className="text-[--color-text-secondary] hover:text-[--color-text] block px-3 py-2 text-base font-medium w-full text-left"
+              className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] block px-3 py-2 text-base font-medium w-full text-left"
             >
               Features
             </button>
             <button
               onClick={() => scrollToSection('how-it-works')}
-              className="text-[--color-text-secondary] hover:text-[--color-text] block px-3 py-2 text-base font-medium w-full text-left"
+              className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] block px-3 py-2 text-base font-medium w-full text-left"
             >
               How It Works
             </button>
             <button
               onClick={() => scrollToSection('roadmap')}
-              className="text-[--color-text-secondary] hover:text-[--color-text] block px-3 py-2 text-base font-medium w-full text-left"
+              className="text-[var(--color-text-secondary)] hover:text-[var(--color-text)] block px-3 py-2 text-base font-medium w-full text-left"
             >
               Roadmap
             </button>
-            <div className="pt-4 pb-3 border-t border-[--color-border]">
+            <div className="pt-4 pb-3 border-t border-[var(--color-border)]">
               <Button
                 onClick={() => scrollToSection('cta')}
                 className="w-full"
