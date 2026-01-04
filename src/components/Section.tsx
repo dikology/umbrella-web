@@ -14,8 +14,8 @@ export default function Section({
   padding = 'normal'
 }: SectionProps) {
   const bgStyles = {
-    default: 'bg-[var(--color-background)]',
-    surface: 'bg-[var(--color-surface)]',
+    default: 'bg-bg',
+    surface: 'bg-surface',
     primary: 'bg-gradient-to-br from-teal-50 to-slate-100'
   };
 

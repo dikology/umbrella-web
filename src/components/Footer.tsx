@@ -11,19 +11,19 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[var(--color-surface)] border-t border-[var(--color-border)]">
+    <footer className="bg-surface border-t border-border">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Column 1: About */}
           <div>
-            <h3 className="text-sm font-semibold text-[var(--color-text)] uppercase tracking-wider mb-4">
+            <h3 className="text-sm font-semibold text-primary-text uppercase tracking-wider mb-4">
               About
             </h3>
             <ul className="space-y-2">
               <li>
                 <button
                   onClick={() => scrollToSection('how-it-works')}
-                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+                  className="text-secondary hover:text-primary transition-colors"
                 >
                   About Umbrella
                 </button>
@@ -31,7 +31,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+                  className="text-secondary hover:text-primary transition-colors"
                 >
                   Blog (Coming)
                 </a>
@@ -39,7 +39,7 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:hello@umbrella-app.com"
-                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+                  className="text-secondary hover:text-primary transition-colors"
                 >
                   Contact
                 </a>
@@ -49,7 +49,7 @@ export default function Footer() {
                   href="https://twitter.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+                  className="text-secondary hover:text-primary transition-colors"
                 >
                   Twitter
                 </a>
@@ -59,14 +59,14 @@ export default function Footer() {
 
           {/* Column 2: Product */}
           <div>
-            <h3 className="text-sm font-semibold text-[var(--color-text)] uppercase tracking-wider mb-4">
+            <h3 className="text-sm font-semibold text-primary-text uppercase tracking-wider mb-4">
               Product
             </h3>
             <ul className="space-y-2">
               <li>
                 <a
                   href="#"
-                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+                  className="text-secondary hover:text-primary transition-colors"
                 >
                   iOS App (TestFlight)
                 </a>
@@ -74,7 +74,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+                  className="text-secondary hover:text-primary transition-colors"
                 >
                   Web App (Roadmap)
                 </a>
@@ -82,7 +82,7 @@ export default function Footer() {
               <li>
                 <button
                   onClick={() => scrollToSection('roadmap')}
-                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+                  className="text-secondary hover:text-primary transition-colors"
                 >
                   Roadmap
                 </button>
@@ -90,7 +90,7 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:support@umbrella-app.com"
-                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+                  className="text-secondary hover:text-primary transition-colors"
                 >
                   Support
                 </a>
@@ -100,14 +100,14 @@ export default function Footer() {
 
           {/* Column 3: Legal */}
           <div>
-            <h3 className="text-sm font-semibold text-[var(--color-text)] uppercase tracking-wider mb-4">
+            <h3 className="text-sm font-semibold text-primary-text uppercase tracking-wider mb-4">
               Legal
             </h3>
             <ul className="space-y-2">
               <li>
                 <Link
                   href="/privacy"
-                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+                  className="text-secondary hover:text-primary transition-colors"
                 >
                   Privacy Policy
                 </Link>
@@ -115,7 +115,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+                  className="text-secondary hover:text-primary transition-colors"
                 >
                   Terms of Service
                 </a>
@@ -123,7 +123,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+                  className="text-secondary hover:text-primary transition-colors"
                 >
                   Cookie Policy
                 </a>
@@ -131,7 +131,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+                  className="text-secondary hover:text-primary transition-colors"
                 >
                   Disclaimer
                 </a>
@@ -141,17 +141,17 @@ export default function Footer() {
 
           {/* Column 4: Company */}
           <div>
-            <h3 className="text-sm font-semibold text-[var(--color-text)] uppercase tracking-wider mb-4">
+            <h3 className="text-sm font-semibold text-primary-text uppercase tracking-wider mb-4">
               Company
             </h3>
             <ul className="space-y-2">
-              <li className="text-[var(--color-text-secondary)]">
+              <li className="text-secondary">
                 Made by language learners, for language learners
               </li>
-              <li className="text-[var(--color-text-secondary)] text-sm">
+              <li className="text-secondary text-sm">
                 © 2026 Umbrella Language Learning
               </li>
-              <li className="text-[var(--color-text-secondary)] text-sm">
+              <li className="text-secondary text-sm">
                 Version 1.0.0
               </li>
             </ul>
@@ -159,12 +159,12 @@ export default function Footer() {
         </div>
 
         {/* Bottom section */}
-        <div className="mt-8 pt-8 border-t border-[var(--color-border)]">
+        <div className="mt-8 pt-8 border-t border-border">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-[var(--color-text-secondary)] text-sm">
+            <p className="text-secondary text-sm">
               © 2026 Umbrella Language Learning. Helping you read Chinese fluently.
             </p>
-            <p className="text-[var(--color-text-secondary)] text-sm mt-2 md:mt-0">
+            <p className="text-secondary text-sm mt-2 md:mt-0">
               Made with ❤️ for language learners worldwide.
             </p>
           </div>

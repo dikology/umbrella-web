@@ -14,10 +14,10 @@ export default function PrivacyPolicy() {
       <main className="max-w-4xl mx-auto px-4 py-16">
         <article className="prose prose-lg prose-slate max-w-none">
           <header className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-[var(--color-text)] mb-4">
+            <h1 className="text-4xl font-bold text-primary-text mb-4">
               Privacy Policy
             </h1>
-            <div className="text-[var(--color-text-secondary)]">
+            <div className="text-secondary">
               <p className="text-lg">Last Updated: January 4, 2026</p>
               <p className="text-lg">Effective Date: January 10, 2026</p>
             </div>
@@ -32,7 +32,7 @@ export default function PrivacyPolicy() {
             <p>
               We take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and protect information when you visit our website (currently umbrella-app.com, the "<strong>Site</strong>"), use our iOS mobile application (currently available via TestFlight, the "<strong>App</strong>"), and interact with our services (collectively, the "<strong>Services</strong>").
             </p>
-            <p className="font-semibold text-[var(--color-text)]">
+            <p className="font-semibold text-primary-text">
               Please read this Privacy Policy carefully. By accessing or using our Services, you acknowledge that you have read, understood, and agree to be bound by all the terms of this Privacy Policy. If you do not agree, please do not use our Services.
             </p>
           </section>
@@ -87,25 +87,25 @@ export default function PrivacyPolicy() {
 
           <section>
             <h2>5. Data Retention</h2>
-            <table className="min-w-full border border-[var(--color-border)] my-4">
-              <thead className="bg-[var(--color-surface)]">
+            <table className="min-w-full border border-border my-4">
+              <thead className="bg-surface">
                 <tr>
-                  <th className="border border-[var(--color-border)] px-4 py-2 text-left">Data Type</th>
-                  <th className="border border-[var(--color-border)] px-4 py-2 text-left">Retention Period</th>
+                  <th className="border border-border px-4 py-2 text-left">Data Type</th>
+                  <th className="border border-border px-4 py-2 text-left">Retention Period</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="border border-[var(--color-border)] px-4 py-2">Email (signup)</td>
-                  <td className="border border-[var(--color-border)] px-4 py-2">Until unsubscribe or 2 years</td>
+                  <td className="border border-border px-4 py-2">Email (signup)</td>
+                  <td className="border border-border px-4 py-2">Until unsubscribe or 2 years</td>
                 </tr>
                 <tr>
-                  <td className="border border-[var(--color-border)] px-4 py-2">Analytics</td>
-                  <td className="border border-[var(--color-border)] px-4 py-2">90 days</td>
+                  <td className="border border-border px-4 py-2">Analytics</td>
+                  <td className="border border-border px-4 py-2">90 days</td>
                 </tr>
                 <tr>
-                  <td className="border border-[var(--color-border)] px-4 py-2">TestFlight Feedback</td>
-                  <td className="border border-[var(--color-border)] px-4 py-2">1 year</td>
+                  <td className="border border-border px-4 py-2">TestFlight Feedback</td>
+                  <td className="border border-border px-4 py-2">1 year</td>
                 </tr>
               </tbody>
             </table>
@@ -152,7 +152,7 @@ export default function PrivacyPolicy() {
           <section>
             <h2>9. Contact Information</h2>
             <p><strong>Privacy Questions or Requests:</strong></p>
-            <p>Email: <a href="mailto:privacy@umbrella-app.com" className="text-[var(--color-primary)]">privacy@umbrella-app.com</a></p>
+            <p>Email: <a href="mailto:privacy@umbrella-app.com" className="text-primary">privacy@umbrella-app.com</a></p>
             <p>We'll respond within 30 days.</p>
           </section>
 

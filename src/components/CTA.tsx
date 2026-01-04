@@ -14,7 +14,7 @@ export default function CTA() {
   };
 
   return (
-    <section id="cta" className="py-16 md:py-24 bg-gradient-to-br from-[var(--color-primary)] to-teal-600">
+    <section id="cta" className="py-16 md:py-24 bg-gradient-to-br from-primary to-teal-600">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {/* Headline */}
         <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
@@ -30,14 +30,14 @@ export default function CTA() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
           <Button
             onClick={handleGetAccess}
-            className="w-full sm:w-auto px-8 py-4 text-lg h-14 bg-white text-[var(--color-primary)] hover:bg-gray-50"
+            className="w-full sm:w-auto px-8 py-4 text-lg h-14 bg-white text-primary hover:bg-gray-50"
           >
             Get TestFlight Access
           </Button>
           <Button
             variant="outline"
             onClick={handleJoinWaitlist}
-            className="w-full sm:w-auto px-8 py-4 text-lg h-14 border-white text-white hover:bg-white hover:text-[var(--color-primary)]"
+            className="w-full sm:w-auto px-8 py-4 text-lg h-14 border-white text-white hover:bg-white hover:text-primary"
           >
             Or Join Waiting List
           </Button>

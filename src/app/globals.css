@@ -1,45 +1,34 @@
 @import "tailwindcss";
 
-:root {
-  /* Umbrella Design System Colors */
+@theme {
+  /* Define Tailwind color utilities */
   --color-primary: #208C85;
   --color-primary-hover: #1A7472;
-  --color-text: #134252;
-  --color-text-secondary: #626C71;
-  --color-background: #FCFCF9;
+  --color-primary-text: #134252;
+  --color-secondary: #626C71;
+  --color-bg: #FCFCF9;
   --color-surface: #FFFFFE;
   --color-border: #D5D5D1;
   --color-success: #2BB669;
   --color-error: #C0152F;
-
-  /* Legacy Next.js variables */
-  --background: #FCFCF9;
-  --foreground: #134252;
-}
-
-@theme {
+  
+  /* Font families */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
 
-  /* Umbrella Design Tokens - Define as Tailwind colors */
-  --color-primary: #208C85;
-  --color-primary-hover: #1A7472;
+:root {
+  /* CSS custom properties for dynamic values */
   --color-text: #134252;
   --color-text-secondary: #626C71;
   --color-background: #FCFCF9;
-  --color-surface: #FFFFFE;
-  --color-border: #D5D5D1;
-  --color-success: #2BB669;
-  --color-error: #C0152F;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-background: #1F2121;
-    --color-surface: #262828;
     --color-text: #F5F5F5;
     --color-text-secondary: #A7A9A9;
-    --color-border: #404040;
+    --color-background: #1F2121;
   }
 }
 
@@ -48,4 +37,12 @@ body {
   color: var(--color-text);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   line-height: 1.6;
+}
+
+/* Apply dark mode CSS variables automatically */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: var(--color-background);
+    color: var(--color-text);
+  }
 }
