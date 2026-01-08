@@ -11,62 +11,84 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-surface border-t border-border">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer className="bg-ink-700 border-t border-ink-600">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* Brand section */}
+        <div className="mb-12 text-center">
+          <h2 className="
+            font-display
+            text-3xl font-semibold
+            text-white
+            mb-3
+          ">
+            Umbrella
+          </h2>
+          <p className="
+            font-body
+            text-ink-300 
+            max-w-2xl 
+            mx-auto
+          ">
+            Learn to read Chinese through authentic texts, matched to your level
+          </p>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Column 1: About */}
           <div>
-            <h3 className="text-sm font-semibold text-primary-text uppercase tracking-wider mb-4">
+            <h3 className="
+              font-ui
+              text-sm font-semibold
+              text-white
+              uppercase tracking-wider
+              mb-4
+            ">
               About
             </h3>
-            <ul className="space-y-2">
+            <ul className="font-body space-y-3">
               <li>
                 <button
                   onClick={() => scrollToSection('how-it-works')}
-                  className="text-secondary hover:text-primary transition-colors"
+                  className="text-ink-300 hover:text-coral-400 transition-colors"
                 >
                   About Umbrella
                 </button>
               </li>
-              <li>
+              {/* <li>
                 <a
                   href="#"
-                  className="text-secondary hover:text-primary transition-colors"
+                  className="text-ink-300 hover:text-coral-400 transition-colors"
                 >
                   Blog (Coming)
                 </a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a
                   href="mailto:hello@umbrella-app.com"
-                  className="text-secondary hover:text-primary transition-colors"
+                  className="text-ink-300 hover:text-coral-400 transition-colors"
                 >
                   Contact
                 </a>
-              </li>
-              <li>
-                <a
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-secondary hover:text-primary transition-colors"
-                >
-                  Twitter
-                </a>
-              </li>
+              </li> */}
             </ul>
           </div>
 
           {/* Column 2: Product */}
           <div>
-            <h3 className="text-sm font-semibold text-primary-text uppercase tracking-wider mb-4">
+            <h3 className="
+              font-ui
+              text-sm font-semibold
+              text-coral-200
+              uppercase tracking-wider
+              mb-4
+            ">
               Product
             </h3>
-            <ul className="space-y-2">
+            <ul className="font-body space-y-3">
               <li>
                 <a
                   href="#"
-                  className="text-secondary hover:text-primary transition-colors"
+                  className="text-ink-300 hover:text-coral-400 transition-colors"
                 >
                   iOS App (TestFlight)
                 </a>
@@ -74,7 +96,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-secondary hover:text-primary transition-colors"
+                  className="text-ink-300 hover:text-coral-400 transition-colors"
                 >
                   Web App (Roadmap)
                 </a>
@@ -82,7 +104,7 @@ export default function Footer() {
               <li>
                 <button
                   onClick={() => scrollToSection('roadmap')}
-                  className="text-secondary hover:text-primary transition-colors"
+                  className="text-ink-300 hover:text-coral-400 transition-colors"
                 >
                   Roadmap
                 </button>
@@ -90,7 +112,7 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:support@umbrella-app.com"
-                  className="text-secondary hover:text-primary transition-colors"
+                  className="text-ink-300 hover:text-coral-400 transition-colors"
                 >
                   Support
                 </a>
@@ -100,71 +122,83 @@ export default function Footer() {
 
           {/* Column 3: Legal */}
           <div>
-            <h3 className="text-sm font-semibold text-primary-text uppercase tracking-wider mb-4">
+            <h3 className="
+              font-ui
+              text-sm font-semibold
+              text-coral-200
+              uppercase tracking-wider
+              mb-4
+            ">
               Legal
             </h3>
-            <ul className="space-y-2">
+            <ul className="font-body space-y-3">
               <li>
                 <Link
                   href="/privacy"
-                  className="text-secondary hover:text-primary transition-colors"
+                  className="text-ink-300 hover:text-coral-400 transition-colors"
                 >
                   Privacy Policy
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <a
                   href="#"
-                  className="text-secondary hover:text-primary transition-colors"
+                  className="text-ink-300 hover:text-coral-400 transition-colors"
                 >
                   Terms of Service
                 </a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a
                   href="#"
-                  className="text-secondary hover:text-primary transition-colors"
+                  className="text-ink-300 hover:text-coral-400 transition-colors"
                 >
                   Cookie Policy
                 </a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a
                   href="#"
-                  className="text-secondary hover:text-primary transition-colors"
+                  className="text-ink-300 hover:text-coral-400 transition-colors"
                 >
                   Disclaimer
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
 
           {/* Column 4: Company */}
           <div>
-            <h3 className="text-sm font-semibold text-primary-text uppercase tracking-wider mb-4">
+            <h3 className="
+              font-ui
+              text-sm font-semibold
+              text-coral-200
+              uppercase tracking-wider
+              mb-4
+            ">
               Company
             </h3>
-            <ul className="space-y-2">
-              <li className="text-secondary">
+            <ul className="font-body space-y-3">
+              <li className="text-ink-300">
                 Made by language learners, for language learners
               </li>
-              <li className="text-secondary text-sm">
+              <li className="text-ink-300 text-sm">
                 © 2026 Umbrella Language Learning
               </li>
-              <li className="text-secondary text-sm">
-                Version 1.0.0
+              <li className="text-ink-300 text-sm">
+                Version 0.1.0
               </li>
             </ul>
           </div>
         </div>
 
         {/* Bottom section */}
-        <div className="mt-8 pt-8 border-t border-border">
+        <div className="mt-12 pt-8 border-t border-ink-600">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-secondary text-sm">
+            <p className="font-body text-ink-400 text-sm">
               © 2026 Umbrella Language Learning. Helping you read Chinese fluently.
             </p>
-            <p className="text-secondary text-sm mt-2 md:mt-0">
+            <p className="font-body text-ink-400 text-sm mt-2 md:mt-0">
               Made with ❤️ for language learners worldwide.
             </p>
           </div>
