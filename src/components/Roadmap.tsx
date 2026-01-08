@@ -31,14 +31,28 @@ export default function Roadmap() {
   ];
 
   return (
-    <section id="roadmap" className="py-16 md:py-24 bg-surface">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="roadmap" className="py-20 md:py-32 bg-paper-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary-text mb-4">
+        <div className="text-center mb-20">
+          <h2 className="
+            font-display
+            text-4xl md:text-5xl lg:text-6xl 
+            font-semibold 
+            text-ink-800 
+            mb-6
+            tracking-tight
+          ">
             Building Umbrella With You
           </h2>
-          <p className="text-xl text-secondary max-w-2xl mx-auto">
+          <p className="
+            font-body
+            text-lg md:text-xl 
+            text-ink-500 
+            max-w-3xl 
+            mx-auto
+            leading-relaxed
+          ">
             We're launching in phases. Here's what's coming. Your feedback shapes every feature.
           </p>
         </div>
@@ -47,34 +61,60 @@ export default function Roadmap() {
         <div className="hidden md:block">
           <div className="relative">
             {/* Timeline line */}
-            <div className="absolute top-24 left-0 right-0 h-0.5 bg-border"></div>
+            <div className="absolute top-24 left-0 right-0 h-1 bg-paper-300 rounded-full"></div>
 
             <div className="grid grid-cols-4 gap-8">
               {phases.map((phase, index) => (
                 <div key={phase.phase} className="relative">
                   {/* Timeline dot */}
-                  <div className={`absolute -top-8 left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full border-4 border-white ${
-                    phase.status === 'current' ? 'bg-primary' : 'bg-border'
-                  }`}></div>
+                  <div className={`
+                    absolute -top-8 left-1/2 transform -translate-x-1/2 
+                    w-5 h-5 rounded-full 
+                    border-4 border-paper-100 
+                    ${phase.status === 'current' ? 'bg-coral-500' : 'bg-paper-400'}
+                  `}></div>
 
-                  <div className="bg-white border border-border rounded-lg p-6 shadow-sm h-64">
+                  <div className="
+                    bg-surface 
+                    border border-paper-300 
+                    rounded-xl 
+                    p-6 
+                    shadow-lg 
+                    hover:shadow-xl
+                    transition-shadow
+                    h-72
+                  ">
                     <div className="text-center">
-                      <div className={`inline-block px-3 py-1 rounded-full text-sm font-medium mb-3 ${
-                        phase.status === 'current'
-                          ? 'bg-primary text-white'
-                          : 'bg-gray-100 text-secondary'
-                      }`}>
+                      <div className={`
+                        font-ui
+                        inline-block px-4 py-1.5 
+                        rounded-full 
+                        text-sm font-semibold 
+                        mb-3 
+                        ${phase.status === 'current'
+                          ? 'bg-coral-500 text-white'
+                          : 'bg-paper-200 text-ink-600'
+                        }
+                      `}>
                         {phase.phase}
                       </div>
-                      <div className="text-sm text-secondary mb-2">
+                      <div className="font-ui text-sm text-ink-400 mb-3">
                         {phase.timeframe}
                       </div>
-                      <h3 className="text-lg font-semibold text-primary-text mb-3">
+                      <h3 className="
+                        font-display
+                        text-lg font-semibold 
+                        text-ink-800 
+                        mb-4
+                      ">
                         {phase.title}
                       </h3>
-                      <ul className="text-sm text-secondary space-y-1">
+                      <ul className="font-body text-sm text-ink-500 space-y-2 text-left">
                         {phase.items.map((item, itemIndex) => (
-                          <li key={itemIndex}>• {item}</li>
+                          <li key={itemIndex} className="flex items-start gap-2">
+                            <span className="text-coral-500 mt-0.5">•</span>
+                            <span>{item}</span>
+                          </li>
                         ))}
                       </ul>
                     </div>
@@ -91,24 +131,46 @@ export default function Roadmap() {
             <div key={phase.phase} className="relative">
               <div className="flex items-start gap-4">
                 {/* Timeline dot */}
-                <div className={`flex-shrink-0 w-4 h-4 rounded-full mt-2 ${
-                  phase.status === 'current' ? 'bg-primary' : 'bg-border'
-                }`}></div>
+                <div className={`
+                  flex-shrink-0 w-5 h-5 rounded-full mt-2 
+                  ${phase.status === 'current' ? 'bg-teal-500' : 'bg-paper-400'}
+                `}></div>
 
-                <div className="bg-white border border-border rounded-lg p-4 shadow-sm flex-1">
-                  <div className={`inline-block px-3 py-1 rounded-full text-sm font-medium mb-2 ${
-                    phase.status === 'current'
-                      ? 'bg-primary text-white'
-                      : 'bg-gray-100 text-secondary'
-                  }`}>
+                <div className="
+                  bg-surface 
+                  border border-paper-300 
+                  rounded-xl 
+                  p-5 
+                  shadow-lg 
+                  flex-1
+                ">
+                  <div className={`
+                    font-ui
+                    inline-block px-3 py-1 
+                    rounded-full 
+                    text-sm font-semibold 
+                    mb-2 
+                    ${phase.status === 'current'
+                      ? 'bg-teal-500 text-white'
+                      : 'bg-paper-200 text-ink-600'
+                    }
+                  `}>
                     {phase.phase} • {phase.timeframe}
                   </div>
-                  <h3 className="text-lg font-semibold text-primary-text mb-2">
+                  <h3 className="
+                    font-display
+                    text-lg font-semibold 
+                    text-ink-800 
+                    mb-3
+                  ">
                     {phase.title}
                   </h3>
-                  <ul className="text-sm text-secondary space-y-1">
+                  <ul className="font-body text-sm text-ink-500 space-y-2">
                     {phase.items.map((item, itemIndex) => (
-                      <li key={itemIndex}>• {item}</li>
+                      <li key={itemIndex} className="flex items-start gap-2">
+                        <span className="text-coral-500 mt-0.5">•</span>
+                        <span>{item}</span>
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -116,15 +178,15 @@ export default function Roadmap() {
 
               {/* Timeline line (except for last item) */}
               {index < phases.length - 1 && (
-                <div className="absolute left-2 top-6 w-0.5 h-16 bg-border"></div>
+                <div className="absolute left-2 top-6 w-1 h-20 bg-paper-300 rounded-full"></div>
               )}
             </div>
           ))}
         </div>
 
         {/* Call to action */}
-        <div className="text-center mt-16">
-          <p className="text-secondary">
+        <div className="text-center mt-20">
+          <p className="font-body text-lg text-ink-500 max-w-2xl mx-auto leading-relaxed">
             Ready to be part of the journey? Join our beta testers and help shape the future of language learning.
           </p>
         </div>

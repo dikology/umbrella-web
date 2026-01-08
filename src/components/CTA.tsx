@@ -14,48 +14,106 @@ export default function CTA() {
   };
 
   return (
-    <section id="cta" className="py-16 md:py-24 bg-gradient-to-br from-primary to-teal-600">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <section 
+      id="cta" 
+      className="py-20 md:py-32 bg-gradient-to-br from-coral-500 via-coral-600 to-coral-700 relative overflow-hidden"
+    >
+      {/* Decorative background elements */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-10 left-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         {/* Headline */}
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+        <h2 className="
+          font-display
+          text-4xl md:text-5xl lg:text-6xl 
+          font-semibold 
+          text-white 
+          mb-8
+          tracking-tight
+        ">
           Ready to Read Better Chinese?
         </h2>
 
         {/* Subheading */}
-        <p className="text-xl text-teal-100 mb-8 max-w-2xl mx-auto">
-          Join 500+ beta testers learning with Umbrella. Get free access to our iOS app and shape the future of language learning.
+        <p className="
+          font-body
+          text-lg md:text-xl 
+          text-white/90 
+          mb-10 
+          max-w-3xl 
+          mx-auto
+          leading-relaxed
+        ">
+          Join 500+ beta testers learning with Umbrella. Get free access to our iOS app 
+          and shape the future of language learning.
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-          <Button
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10">
+          <button
             onClick={handleGetAccess}
-            className="w-full sm:w-auto px-8 py-4 text-lg h-14 bg-white text-primary hover:bg-gray-50"
+            className="
+              font-ui
+              w-full sm:w-auto 
+              px-8 py-4 
+              text-lg font-semibold
+              bg-white text-coral-600 
+              hover:bg-coral-50 
+              rounded-xl 
+              shadow-xl hover:shadow-2xl
+              transition-all duration-200
+              active:scale-[0.98]
+            "
           >
             Get TestFlight Access
-          </Button>
-          <Button
-            variant="outline"
+          </button>
+          <button
             onClick={handleJoinWaitlist}
-            className="w-full sm:w-auto px-8 py-4 text-lg h-14 border-white text-white hover:bg-white hover:text-primary"
+            className="
+              font-ui
+              w-full sm:w-auto 
+              px-8 py-4 
+              text-lg font-semibold
+              border-2 border-white 
+              text-white 
+              hover:bg-white hover:text-coral-600 
+              rounded-xl 
+              shadow-lg hover:shadow-xl
+              transition-all duration-200
+              active:scale-[0.98]
+            "
           >
             Or Join Waiting List
-          </Button>
+          </button>
         </div>
 
         {/* Trust Signals */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center text-teal-100">
+        <div className="
+          flex flex-col sm:flex-row gap-6 
+          justify-center items-center 
+          font-body
+          text-white/90
+        ">
           <div className="flex items-center gap-2">
-            <span className="text-green-300">✓</span>
+            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
             <span>Free iOS beta</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-green-300">✓</span>
-            <span>Early access to web platform (Phase 2)</span>
+            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span>Early web access (Phase 2)</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-green-300">✓</span>
-            <span>Direct feedback influence</span>
+            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span>Shape our roadmap</span>
           </div>
         </div>
       </div>
