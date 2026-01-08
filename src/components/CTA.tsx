@@ -47,7 +47,7 @@ export default function CTA() {
           mx-auto
           leading-relaxed
         ">
-          Join 500+ beta testers learning with Umbrella. Get free access to our iOS app 
+          Join testers learning with Umbrella. Get free access to our iOS app 
           and shape the future of language learning.
         </p>
 

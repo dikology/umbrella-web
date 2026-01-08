@@ -24,7 +24,7 @@ export default function Features() {
             mx-auto
             leading-relaxed
           ">
-            Four key features that make reading Chinese texts accessible and enjoyable 
+            Key features that make reading Chinese texts accessible and enjoyable 
             at any proficiency level.
           </p>
         </div>
@@ -34,14 +34,14 @@ export default function Features() {
           <FeatureCard
             icon="📖"
             title="Smart Dictionary at Your Fingertips"
-            description="Tap any word. See instant translations, pinyin pronunciation, usage examples, and hear native speaker audio. No more switching between apps."
+            description="Tap any word. See instant translations, pinyin pronunciation. No more switching between apps."
             variant="left-aligned"
           />
 
           <FeatureCard
             icon="🎯"
             title="Adaptive Difficulty Matching"
-            description="Our system learns your level by analyzing words you know. It recommends content that's challenging but readable—no more guesswork."
+            description="Our system learns your level by analyzing words you know. It recommends content that's challenging but readable."
             variant="left-aligned"
           />
 
@@ -52,12 +52,12 @@ export default function Features() {
             variant="left-aligned"
           />
 
-          <FeatureCard
+          {/* <FeatureCard
             icon="📊"
             title="Progress Tracking & Analytics"
             description="Watch your vocabulary size grow week by week. Track HSK level progress, reading speed, and comprehension improvements with real metrics."
             variant="left-aligned"
-          />
+          /> */}
         </div>
 
         {/* iPhone Mockups Section */}
@@ -95,10 +95,10 @@ export default function Features() {
               description="Tap any word for instant translation, pinyin, and audio pronunciation"
             />
 
-            <PhoneMockupCard
+            {/* <PhoneMockupCard
               title="Track Progress"
               description="Watch your vocabulary and HSK level grow as you read"
-            />
+            /> */}
           </div>
         </div>
       </div>

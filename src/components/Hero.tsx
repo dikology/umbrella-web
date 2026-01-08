@@ -41,8 +41,8 @@ export default function Hero() {
           mx-auto 
           leading-relaxed
         ">
-          Learn to read Chinese the way you learn your native language—through stories, 
-          articles, and ideas that fascinate you. Not through endless vocabulary drills.
+          Learn to read Chinese the way you learn your native language. Through stories, 
+          articles, and ideas that fascinate you.
         </p>
 
         {/* CTA Buttons */}
@@ -75,7 +75,7 @@ export default function Hero() {
               clipRule="evenodd" 
             />
           </svg>
-          <span className="font-body">Join 500+ beta testers already learning with Umbrella</span>
+          <span className="font-body">Join testers already learning with Umbrella</span>
         </div>
       </div>
 

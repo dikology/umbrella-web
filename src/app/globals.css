@@ -11,16 +11,20 @@
   --color-paper-500: #D4C5A9;
   
   /* Ink tones - text colors */
+  --color-ink-100: #E8E6E1;
+  --color-ink-300: #A8A297;
   --color-ink-400: #6B6456;
   --color-ink-500: #4A4237;
   --color-ink-600: #3A342A;
   --color-ink-700: #2A241C;
   --color-ink-800: #1A140E;
   
-  /* Brand colors - Red/Coral primary (from reference) */
+  /* Brand colors - Red/Coral primary */
   --color-coral-50: #FFF5F3;
   --color-coral-100: #FFE5E0;
   --color-coral-200: #FFCCC1;
+  --color-coral-300: #FFB2A2;
+  --color-coral-400: #FF9983;
   --color-coral-500: #E74C3C;
   --color-coral-600: #C0392B;
   --color-coral-700: #A93226;
@@ -45,12 +49,12 @@
 }
 
 :root {
-  /* CSS custom properties for dynamic values */
-  --color-text: #3A342A;
-  --color-text-secondary: #6B6456;
-  --color-background: #FAF8F0;
-  --color-surface-elevated: #FDFCF7;
-  
+  /* CSS custom properties for dynamic values - using design tokens */
+  --color-text: var(--color-ink-400);
+  --color-text-secondary: var(--color-ink-200);
+  --color-background: var(--color-paper-100);
+  --color-surface-elevated: var(--color-paper-50);
+
   /* Reading-specific variables */
   --line-height-reading: 1.75;
   --letter-spacing-reading: 0.01em;
@@ -58,15 +62,10 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* Dark mode - warm, low-contrast for night reading */
-    --color-text: #E8E6E1;
-    --color-text-secondary: #A8A297;
-    --color-background: #1A140E;
-    --color-surface-elevated: #2A241C;
-    
-    --color-primary: #FF9983;
-    --color-primary-hover: #FFB2A2;
-    --color-border: #4A3F2F;
+    --color-text: var(--color-ink-400);
+    --color-text-secondary: var(--color-ink-200);
+    --color-background: var(--color-paper-100);
+    --color-surface-elevated: var(--color-paper-50);
   }
 }
 
@@ -154,20 +153,16 @@ html {
     color: var(--color-text);
   }
   
-  h1, h2, h3, h4, h5, h6 {
-    color: var(--color-text);
-  }
-  
   ::-webkit-scrollbar-track {
     background: var(--color-background);
   }
   
   ::-webkit-scrollbar-thumb {
-    background: #4A3F2F;
+    background: var(--color-paper-400);
     border-color: var(--color-background);
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    background: #6B5E4C;
+    background: var(--color-paper-300);
   }
 }

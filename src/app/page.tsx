@@ -23,7 +23,7 @@ export default function Home() {
       <Navigation />
       <main>
         <Hero />
-        <ProblemSolution />
+        {/* <ProblemSolution /> */}
         <Features />
         <Roadmap />
         <CTA />

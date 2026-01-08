@@ -4,28 +4,28 @@ export default function Roadmap() {
       phase: "Phase 1",
       timeframe: "Now",
       title: "iOS TestFlight Beta",
-      items: ["Landing Page", "Privacy Policy", "Email Collection"],
+      items: ["Landing Page", "Privacy Policy", "Email Collection", "Smart Dictionary"],
       status: "current"
     },
     {
       phase: "Phase 2",
-      timeframe: "Spring 2026",
+      timeframe: "Somewhere in 2026",
       title: "Full Reading Platform",
-      items: ["Web App Launch", "Proficiency Engine", "Offline Reading", "Smart Dictionary"],
+      items: ["Web App Launch", "Proficiency Engine", "Device Syncing"],
       status: "upcoming"
     },
     {
       phase: "Phase 3",
-      timeframe: "Summer 2026",
+      timeframe: "Somewhere in 2026",
       title: "Classroom Tools",
       items: ["Teacher Dashboard", "Student Progress Tracking", "Assignment Management"],
       status: "upcoming"
     },
     {
       phase: "Phase 4",
-      timeframe: "Fall 2026",
+      timeframe: "Somewhere in 2026",
       title: "AI-Powered Learning",
-      items: ["Personalized Content Generation", "Spaced Repetition", "Advanced Analytics"],
+      items: ["Personalized Content Generation", "Advanced Analytics"],
       status: "upcoming"
     }
   ];
@@ -133,7 +133,7 @@ export default function Roadmap() {
                 {/* Timeline dot */}
                 <div className={`
                   flex-shrink-0 w-5 h-5 rounded-full mt-2 
-                  ${phase.status === 'current' ? 'bg-teal-500' : 'bg-paper-400'}
+                  ${phase.status === 'current' ? 'bg-coral-500' : 'bg-paper-400'}
                 `}></div>
 
                 <div className="
@@ -151,7 +151,7 @@ export default function Roadmap() {
                     text-sm font-semibold 
                     mb-2 
                     ${phase.status === 'current'
-                      ? 'bg-teal-500 text-white'
+                      ? 'bg-coral-500 text-white'
                       : 'bg-paper-200 text-ink-600'
                     }
                   `}>
