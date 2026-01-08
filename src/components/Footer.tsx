@@ -17,8 +17,8 @@ export default function Footer() {
         <div className="mb-12 text-center">
           <h2 className="
             font-display
-            text-3xl font-semibold 
-            text-coral-400 
+            text-3xl font-semibold
+            text-white
             mb-3
           ">
             Umbrella
@@ -38,9 +38,9 @@ export default function Footer() {
           <div>
             <h3 className="
               font-ui
-              text-sm font-semibold 
-              text-coral-400 
-              uppercase tracking-wider 
+              text-sm font-semibold
+              text-white
+              uppercase tracking-wider
               mb-4
             ">
               About
@@ -54,32 +54,22 @@ export default function Footer() {
                   About Umbrella
                 </button>
               </li>
-              <li>
+              {/* <li>
                 <a
                   href="#"
                   className="text-ink-300 hover:text-coral-400 transition-colors"
                 >
                   Blog (Coming)
                 </a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a
                   href="mailto:hello@umbrella-app.com"
                   className="text-ink-300 hover:text-coral-400 transition-colors"
                 >
                   Contact
                 </a>
-              </li>
-              <li>
-                <a
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-ink-300 hover:text-coral-400 transition-colors"
-                >
-                  Twitter
-                </a>
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -87,9 +77,9 @@ export default function Footer() {
           <div>
             <h3 className="
               font-ui
-              text-sm font-semibold 
-              text-coral-400 
-              uppercase tracking-wider 
+              text-sm font-semibold
+              text-coral-200
+              uppercase tracking-wider
               mb-4
             ">
               Product
@@ -134,9 +124,9 @@ export default function Footer() {
           <div>
             <h3 className="
               font-ui
-              text-sm font-semibold 
-              text-coral-400 
-              uppercase tracking-wider 
+              text-sm font-semibold
+              text-coral-200
+              uppercase tracking-wider
               mb-4
             ">
               Legal
@@ -150,30 +140,30 @@ export default function Footer() {
                   Privacy Policy
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <a
                   href="#"
                   className="text-ink-300 hover:text-coral-400 transition-colors"
                 >
                   Terms of Service
                 </a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a
                   href="#"
                   className="text-ink-300 hover:text-coral-400 transition-colors"
                 >
                   Cookie Policy
                 </a>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <a
                   href="#"
                   className="text-ink-300 hover:text-coral-400 transition-colors"
                 >
                   Disclaimer
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
 
@@ -181,9 +171,9 @@ export default function Footer() {
           <div>
             <h3 className="
               font-ui
-              text-sm font-semibold 
-              text-coral-400 
-              uppercase tracking-wider 
+              text-sm font-semibold
+              text-coral-200
+              uppercase tracking-wider
               mb-4
             ">
               Company
@@ -196,7 +186,7 @@ export default function Footer() {
                 © 2026 Umbrella Language Learning
               </li>
               <li className="text-ink-300 text-sm">
-                Version 1.0.0
+                Version 0.1.0
               </li>
             </ul>
           </div>

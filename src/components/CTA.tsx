@@ -28,9 +28,9 @@ export default function CTA() {
         {/* Headline */}
         <h2 className="
           font-display
-          text-4xl md:text-5xl lg:text-6xl 
-          font-semibold 
-          text-white 
+          text-4xl md:text-5xl lg:text-6xl
+          font-semibold
+          text-white dark:text-white
           mb-8
           tracking-tight
         ">

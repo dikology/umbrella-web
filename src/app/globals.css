@@ -87,7 +87,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: -0.025em;
-  color: var(--color-ink-800);
+  color: var(--color-text);
 }
 
 /* UI Elements - Sans-serif */
