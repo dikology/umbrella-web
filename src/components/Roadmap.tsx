@@ -53,7 +53,7 @@ export default function Roadmap() {
             mx-auto
             leading-relaxed
           ">
-            We're launching in phases. Here's what's coming. Your feedback shapes every feature.
+            We&apos;re launching in phases. Here&apos;s what&apos;s coming. Your feedback shapes every feature.
           </p>
         </div>
 
@@ -64,7 +64,7 @@ export default function Roadmap() {
             <div className="absolute top-24 left-0 right-0 h-1 bg-paper-300 rounded-full"></div>
 
             <div className="grid grid-cols-4 gap-8">
-              {phases.map((phase, index) => (
+              {phases.map((phase) => (
                 <div key={phase.phase} className="relative">
                   {/* Timeline dot */}
                   <div className={`

@@ -26,11 +26,11 @@ export default function PrivacyPolicy() {
           <section>
             <h2>1. Introduction</h2>
             <p>
-              Welcome to <strong>Umbrella</strong> ("<strong>we</strong>", "<strong>us</strong>", "<strong>our</strong>", or "<strong>Company</strong>").
+              Welcome to <strong>Umbrella</strong> (&ldquo;<strong>we</strong>&rdquo;, &ldquo;<strong>us</strong>&rdquo;, &ldquo;<strong>our</strong>&rdquo;, or &ldquo;<strong>Company</strong>&rdquo;).
               Umbrella is a Chinese language learning platform built to help you read authentic Chinese texts at your proficiency level.
             </p>
             <p>
-              We take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and protect information when you visit our website (currently umbrella-app.com, the "<strong>Site</strong>"), use our iOS mobile application (currently available via TestFlight, the "<strong>App</strong>"), and interact with our services (collectively, the "<strong>Services</strong>").
+              We take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and protect information when you visit our website (currently umbrella-app.com, the &ldquo;<strong>Site</strong>&rdquo;), use our iOS mobile application (currently available via TestFlight, the &ldquo;<strong>App</strong>&rdquo;), and interact with our services (collectively, the &ldquo;<strong>Services</strong>&rdquo;).
             </p>
             <p className="font-semibold text-primary-text">
               Please read this Privacy Policy carefully. By accessing or using our Services, you acknowledge that you have read, understood, and agree to be bound by all the terms of this Privacy Policy. If you do not agree, please do not use our Services.
@@ -117,7 +117,7 @@ export default function PrivacyPolicy() {
             <ul>
               <li>✓ <strong>Right to Access:</strong> Request a copy of all data we hold about you</li>
               <li>✓ <strong>Right to Correction:</strong> Ask us to fix inaccurate information</li>
-              <li>✓ <strong>Right to Erasure:</strong> Request deletion ("right to be forgotten")</li>
+              <li>✓ <strong>Right to Erasure:</strong> Request deletion (&ldquo;right to be forgotten&rdquo;)</li>
               <li>✓ <strong>Right to Data Portability:</strong> Download your data in standard format</li>
               <li>✓ <strong>Right to Object:</strong> Opt-out of marketing emails, analytics</li>
               <li>✓ <strong>Right to Withdraw Consent:</strong> Withdraw consent anytime</li>
@@ -127,7 +127,7 @@ export default function PrivacyPolicy() {
             <ul>
               <li>✓ <strong>Right to Know:</strong> Learn what personal information we collect</li>
               <li>✓ <strong>Right to Delete:</strong> Request deletion (with some exceptions)</li>
-              <li>✓ <strong>Right to Opt-Out:</strong> Opt-out of any "sale" of personal information</li>
+              <li>✓ <strong>Right to Opt-Out:</strong> Opt-out of any &ldquo;sale&rdquo; of personal information</li>
               <li>✓ <strong>Right to Non-Discrimination:</strong> We will not discriminate</li>
             </ul>
           </section>
@@ -144,7 +144,7 @@ export default function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2>8. Children's Privacy (COPPA)</h2>
+            <h2>8. Children&apos;s Privacy (COPPA)</h2>
             <p>Our Services are intended for ages 13+. We do not knowingly collect information from children under 13 in the US.</p>
             <p>If you are a minor (13-17) in the US, we recommend reviewing this policy with your parent/guardian. You have the same privacy rights as adults.</p>
           </section>
@@ -153,12 +153,12 @@ export default function PrivacyPolicy() {
             <h2>9. Contact Information</h2>
             <p><strong>Privacy Questions or Requests:</strong></p>
             <p>Email: <a href="mailto:privacy@umbrella-app.com" className="text-primary">privacy@umbrella-app.com</a></p>
-            <p>We'll respond within 30 days.</p>
+            <p>We&apos;ll respond within 30 days.</p>
           </section>
 
           <section>
             <h2>10. Updates to This Policy</h2>
-            <p>We may update this Privacy Policy as our Services evolve. We will notify you of material changes via email (30 days notice) and post the updated policy with a new "Last Updated" date.</p>
+            <p>We may update this Privacy Policy as our Services evolve. We will notify you of material changes via email (30 days notice) and post the updated policy with a new &ldquo;Last Updated&rdquo; date.</p>
             <p>Your continued use of our Services after updates means you accept the new policy.</p>
           </section>
         </article>

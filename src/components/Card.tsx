@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import Image from 'next/image';
 
 interface CardProps {
   children: ReactNode;
@@ -115,12 +116,13 @@ export function PhoneMockupCard({
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-ink-800 rounded-b-2xl z-10"></div>
           
           {/* Screenshot placeholder */}
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-teal-50 to-paper-100">
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-teal-50 to-paper-100 relative">
             {imageSrc ? (
-              <img 
-                src={imageSrc} 
+              <Image
+                src={imageSrc}
                 alt={imageAlt || title}
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
               />
             ) : (
               <div className="text-center p-8">

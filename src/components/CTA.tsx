@@ -1,7 +1,5 @@
 'use client';
 
-import Button from './Button';
-
 export default function CTA() {
   const handleGetAccess = () => {
     // For now, just show an alert since email tech is not implemented yet

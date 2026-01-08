@@ -57,7 +57,7 @@ export default function ProblemSolution() {
               The Gap
             </h3>
             <p className="font-body text-secondary leading-relaxed">
-              Duolingo, HelloChinese teach drilling, not reading. You can't read authentic text. No real-world application.
+              Duolingo, HelloChinese teach drilling, not reading. You can&apos;t read authentic text. No real-world application.
             </p>
           </Card>
 
@@ -73,7 +73,7 @@ export default function ProblemSolution() {
               The Frustration
             </h3>
             <p className="font-body text-secondary leading-relaxed">
-              You're stuck: vocabulary drills don't build real comprehension. Progress feels artificial and disconnected.
+              You&apos;re stuck: vocabulary drills don&apos;t build real comprehension. Progress feels artificial and disconnected.
             </p>
           </Card>
         </div>
@@ -143,7 +143,7 @@ export default function ProblemSolution() {
               Your Level Content
             </h3>
             <p className="font-body text-secondary leading-relaxed">
-              AI-powered difficulty matching. No more "too easy" or "impossible." Content that challenges but you can understand.
+              AI-powered difficulty matching. No more &ldquo;too easy&rdquo; or &ldquo;impossible.&rdquo; Content that challenges but you can understand.
             </p>
           </Card>
 

@@ -1,6 +1,5 @@
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
-import ProblemSolution from '@/components/ProblemSolution';
 import Features from '@/components/Features';
 import Roadmap from '@/components/Roadmap';
 import CTA from '@/components/CTA';
