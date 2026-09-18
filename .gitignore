@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# claude skills (self-downloaded binaries)
+.claude/settings.local.json
+.claude/skills/impeccable/scripts/bin/
