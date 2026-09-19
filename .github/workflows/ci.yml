@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      API_ORIGIN: http://localhost:8000
+      JWT_SECRET: ci-only-secret-at-least-32-bytes-long-xx
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npx tsc --noEmit
+
+      # The e2e spec needs the real backend: check out the API repo and bring
+      # up its compose stack (db + api), then apply migrations.
+      - uses: actions/checkout@v4
+        with:
+          repository: dikology/umbrella-api
+          path: umbrella-api
+      - run: docker compose up -d --build --wait db api
+        working-directory: umbrella-api
+      - run: docker compose exec -T api alembic upgrade head
+        working-directory: umbrella-api
+
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
