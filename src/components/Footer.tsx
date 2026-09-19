@@ -94,12 +94,12 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/login"
                   className="text-ink-300 hover:text-coral-400 transition-colors"
                 >
-                  Web App (Roadmap)
-                </a>
+                  Log in
+                </Link>
               </li>
               <li>
                 <button

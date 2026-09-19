@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Button from './Button';
 
 export default function Navigation() {
@@ -107,7 +108,13 @@ export default function Navigation() {
           </div>
 
           {/* CTA Button */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-4">
+            <Link
+              href="/login"
+              className="font-ui text-sm font-medium text-ink-500 hover:text-ink-800 px-3 py-2 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-coral-500"
+            >
+              Log in
+            </Link>
             <Button
               onClick={() => scrollToSection('cta')}
               size="sm"
@@ -189,6 +196,12 @@ export default function Navigation() {
             >
               Roadmap
             </button>
+            <Link
+              href="/login"
+              className="font-ui text-ink-500 hover:text-ink-700 hover:bg-paper-200 block px-3 py-2 rounded-lg text-base font-medium transition-colors"
+            >
+              Log in
+            </Link>
             <div className="pt-4 pb-3 border-t border-paper-300">
               <Button
                 onClick={() => scrollToSection('cta')}
