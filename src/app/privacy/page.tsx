@@ -18,8 +18,8 @@ export default function PrivacyPolicy() {
               Privacy Policy
             </h1>
             <div className="text-secondary">
-              <p className="text-lg">Last Updated: January 4, 2026</p>
-              <p className="text-lg">Effective Date: January 10, 2026</p>
+              <p className="text-lg">Last Updated: September 19, 2026</p>
+              <p className="text-lg">Effective Date: September 19, 2026</p>
             </div>
           </header>
 
@@ -44,6 +44,9 @@ export default function PrivacyPolicy() {
             <h4>Email Address</h4>
             <p>When you sign up for our TestFlight beta or join our waiting list, we require your email address. When you contact us for support or provide feedback, we collect the email, subject, and message content.</p>
 
+            <h4>Account Information</h4>
+            <p>When you create an Umbrella account, we collect your email address, your date of birth (to confirm you meet our minimum age), and a timestamp recording that you consented to this policy. We store your password only as a salted argon2id hash; we never store or see it in plain text.</p>
+
             <h4>Apple ID (Optional)</h4>
             <p>If you choose to provide your Apple ID when requesting TestFlight access, we store it to facilitate beta testing invitations. Your Apple ID is not shared with anyone except Apple Inc. for TestFlight administration.</p>
 
@@ -51,6 +54,14 @@ export default function PrivacyPolicy() {
             <p>If you voluntarily provide feedback through surveys, TestFlight feedback forms, or support messages. This helps us improve the product and may be used in testimonials (with your permission).</p>
 
             <h3>2.2 Information Automatically Collected</h3>
+            <h4>Essential Cookies</h4>
+            <p>When you are logged in, we set two strictly necessary, HTTP-only cookies. They keep you signed in and are not used for analytics or advertising:</p>
+            <ul>
+              <li><strong>ub_access:</strong> short-lived access token; expires after 15 minutes</li>
+              <li><strong>ub_refresh:</strong> refresh token used to renew your session; expires after 30 days or when you log out</li>
+            </ul>
+            <p>For each session we also record the browser user agent and IP address alongside the refresh token, for security purposes.</p>
+
             <h4>Website Analytics</h4>
             <ul>
               <li><strong>IP Address (Anonymized):</strong> Last octet hashed; used to understand traffic geography</li>
@@ -66,7 +77,7 @@ export default function PrivacyPolicy() {
           <section>
             <h2>3. How We Use Your Information</h2>
             <ul>
-              <li><strong>To Provide Services:</strong> Email delivery of TestFlight invitations, customer support responses, beta testing administration</li>
+              <li><strong>To Provide Services:</strong> Creating and securing your account, keeping you logged in, email delivery of TestFlight invitations, customer support responses, beta testing administration</li>
               <li><strong>To Communicate:</strong> Product updates, invitations to beta phases, surveys, event announcements</li>
               <li><strong>To Improve Services:</strong> Analyze user behavior, identify technical issues, A/B test designs, measure conversion rates</li>
               <li><strong>For Research & Analytics:</strong> Aggregate usage statistics (not tied to individuals)</li>
@@ -98,6 +109,14 @@ export default function PrivacyPolicy() {
                 <tr>
                   <td className="border border-border px-4 py-2">Email (signup)</td>
                   <td className="border border-border px-4 py-2">Until unsubscribe or 2 years</td>
+                </tr>
+                <tr>
+                  <td className="border border-border px-4 py-2">Account information (email, date of birth, consent timestamp)</td>
+                  <td className="border border-border px-4 py-2">Until you delete your account</td>
+                </tr>
+                <tr>
+                  <td className="border border-border px-4 py-2">Session cookies (ub_access, ub_refresh)</td>
+                  <td className="border border-border px-4 py-2">15 minutes / 30 days, or until you log out</td>
                 </tr>
                 <tr>
                   <td className="border border-border px-4 py-2">Analytics</td>

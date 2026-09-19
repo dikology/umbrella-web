@@ -514,7 +514,7 @@ Success:
 8. Data Security
    - TLS/HTTPS for all transmission
    - AES-256 encryption at rest
-   - No passwords stored (OAuth where possible)
+   - ~~No passwords stored (OAuth where possible)~~ — superseded: passwords are stored, hashed with argon2id (see `umbrella-api/docs/adr/0001-api-owns-authentication.md`)
    - Annual security audit
    
 9. Children's Privacy (COPPA)
@@ -844,7 +844,7 @@ Your continued use of our Services after updates means you accept the new policy
 
 | Cookie | Type | Purpose | Duration |
 |--------|------|---------|----------|
-| session_id | Essential | Maintain login state (Phase 2+) | Session |
+| ~~session_id~~ | ~~Essential~~ | ~~Maintain login state (Phase 2+)~~ — superseded by `ub_access` (15 min) and `ub_refresh` (30 days), HTTP-only; see `umbrella-api/docs/adr/0002-token-topology-and-edge-trust.md` | ~~Session~~ |
 | analytics_opt_in | Optional | Remember your analytics preference | 1 year |
 | dark_mode | Preference | Remember dark mode choice | 1 year |
 | utm_source, utm_campaign | Analytics | Track referral source | Session |
