@@ -27,6 +27,8 @@ jobs:
         with:
           repository: dikology/umbrella-api
           path: umbrella-api
+          # umbrella-api is private; the default GITHUB_TOKEN can't read it.
+          token: ${{ secrets.API_REPO_TOKEN }}
       - run: docker compose up -d --build --wait db api
         working-directory: umbrella-api
       - run: docker compose exec -T api alembic upgrade head
