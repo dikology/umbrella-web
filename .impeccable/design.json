@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-19T00:00:00Z",
+  "title": "Design System: Umbrella",
+  "extensions": {
+    "colorMeta": {
+      "vermilion": { "role": "primary", "displayName": "Vermilion Seal", "canonical": "#E74C3C", "tonalRamp": ["#732218","#8E2A1F","#A93226","#C0392B","#E74C3C","#FF9983","#FFCCC1","#FFF5F3"] },
+      "paper-cream": { "role": "neutral", "displayName": "Cream Paper", "canonical": "#FAF8F0", "tonalRamp": ["#4A3F2F","#6B5E4C","#9B8A6F","#B8A888","#D4C5A9","#E2D8C3","#EDE7D8","#FDFCF7"] },
+      "ink-body": { "role": "neutral", "displayName": "Ink Body", "canonical": "#4A4237", "tonalRamp": ["#0A0805","#1A140E","#2A241C","#3A342A","#4A4237","#6B6456","#A8A297","#E8E6E1"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headline only." },
+      "body": { "displayName": "Body", "purpose": "Reading text and descriptions." },
+      "label": { "displayName": "Label", "purpose": "Buttons and navigation." }
+    },
+    "shadows": [
+      { "name": "rest", "value": "0 4px 6px -1px rgba(74,66,55,0.1), 0 2px 4px -2px rgba(74,66,55,0.1)", "purpose": "Cards and primary buttons at rest." },
+      { "name": "lift", "value": "0 10px 15px -3px rgba(74,66,55,0.1), 0 4px 6px -4px rgba(74,66,55,0.1)", "purpose": "Hover and scrolled nav." },
+      { "name": "float", "value": "0 20px 25px -5px rgba(74,66,55,0.1), 0 8px 10px -6px rgba(74,66,55,0.1)", "purpose": "Elevated card hover." }
+    ],
+    "motion": [
+      { "name": "ui-transition", "value": "200ms ease", "purpose": "Buttons, links, nav." },
+      { "name": "card-transition", "value": "300ms ease", "purpose": "Card hover lift." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main call to action, vermilion fill.",
+      "html": "<button class=\"ds-btn-primary\">Get TestFlight Access</button>",
+      "css": ".ds-btn-primary{font-family:Inter,sans-serif;font-weight:500;font-size:16px;background:#E74C3C;color:#fff;padding:12px 24px;border:0;border-radius:12px;box-shadow:0 4px 6px -1px rgba(74,66,55,.1),0 2px 4px -2px rgba(74,66,55,.1);cursor:pointer;transition:all .2s ease}.ds-btn-primary:hover{background:#C0392B;box-shadow:0 10px 15px -3px rgba(74,66,55,.1),0 4px 6px -4px rgba(74,66,55,.1)}.ds-btn-primary:active{transform:scale(.98)}.ds-btn-primary:focus-visible{outline:2px solid #E74C3C;outline-offset:2px}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action with vermilion border.",
+      "html": "<button class=\"ds-btn-outline\">View Features</button>",
+      "css": ".ds-btn-outline{font-family:Inter,sans-serif;font-weight:500;font-size:16px;background:transparent;color:#C0392B;padding:12px 24px;border:2px solid #E74C3C;border-radius:12px;cursor:pointer;transition:all .2s ease}.ds-btn-outline:hover{background:#E74C3C;color:#fff}.ds-btn-outline:focus-visible{outline:2px solid #E74C3C;outline-offset:2px}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Quiet paper button.",
+      "html": "<button class=\"ds-btn-secondary\">Learn more</button>",
+      "css": ".ds-btn-secondary{font-family:Inter,sans-serif;font-weight:500;font-size:16px;background:#F5F1E8;color:#1A140E;padding:12px 24px;border:1px solid #E2D8C3;border-radius:12px;cursor:pointer;transition:all .2s ease}.ds-btn-secondary:hover{background:#EDE7D8;border-color:#D4C5A9}.ds-btn-secondary:focus-visible{outline:2px solid #E74C3C;outline-offset:2px}"
+    },
+    {
+      "name": "Feature Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Icon tile, serif title, muted description on paper.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-card-icon\"><svg width=\"28\" height=\"28\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#C0392B\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 19.5A2.5 2.5 0 0 1 6.5 17H20V2H6.5A2.5 2.5 0 0 0 4 4.5z\"/></svg></div><h3>Smart Dictionary</h3><p>Tap any word for an instant translation and pinyin.</p></div>",
+      "css": ".ds-card{background:#FDFCF7;border-radius:12px;padding:24px;text-align:center;box-shadow:0 10px 15px -3px rgba(74,66,55,.1),0 4px 6px -4px rgba(74,66,55,.1);transition:all .3s ease}.ds-card:hover{box-shadow:0 20px 25px -5px rgba(74,66,55,.1),0 8px 10px -6px rgba(74,66,55,.1)}.ds-card-icon{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;background:#FFF5F3;border-radius:16px;margin-bottom:20px}.ds-card h3{font-family:'Crimson Pro',Georgia,serif;font-size:20px;font-weight:600;color:#1A140E;letter-spacing:-.025em;margin:0 0 12px}.ds-card p{font-family:'Source Serif 4',Georgia,serif;font-size:15px;line-height:1.625;color:#6B6456;margin:0}"
+    },
+    {
+      "name": "Navigation Link",
+      "kind": "nav",
+      "refersTo": "button-ghost",
+      "description": "Inter link with growing vermilion underline.",
+      "html": "<button class=\"ds-nav-link\">Features</button>",
+      "css": ".ds-nav-link{position:relative;font-family:Inter,sans-serif;font-size:14px;font-weight:500;color:#4A4237;background:none;border:0;padding:8px 12px;cursor:pointer;transition:color .2s}.ds-nav-link:hover{color:#1A140E}.ds-nav-link::after{content:'';position:absolute;left:0;bottom:0;width:0;height:2px;background:#E74C3C;transition:width .2s}.ds-nav-link:hover::after{width:100%}.ds-nav-link:focus-visible{outline:2px solid #E74C3C;outline-offset:2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Reading Room",
+    "overview": "A quiet library table at the end of the day: warm paper, dark ink, a lamp's worth of soft shadow, and one red seal. Umbrella is a product about reading, so its interface behaves like a well-set page.",
+    "keyCharacteristics": [
+      "Paper-toned backgrounds, ink-toned text; no pure white, no pure black.",
+      "Serif for voice (display and body), sans-serif (Inter) only for functional UI.",
+      "One accent, vermilion, used sparingly.",
+      "Soft, warm, brown-tinted shadows; surfaces feel like paper laid on paper.",
+      "Generous reading rhythm: 1.75 body line height, 16px base."
+    ],
+    "rules": [
+      { "name": "The Red Seal Rule", "body": "Vermilion appears on a small share of any screen: the primary action, the wordmark, one emphasized phrase.", "section": "colors" },
+      { "name": "The Warm Neutral Rule", "body": "Every neutral leans warm. Never introduce a cool gray or pure white/black.", "section": "colors" },
+      { "name": "The Serif Voice Rule", "body": "Reading content and headlines are serif. Inter is reserved for controls.", "section": "typography" },
+      { "name": "The Brown Shadow Rule", "body": "Shadows are warm and low-contrast. A gray or black shadow breaks the paper illusion.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep every surface and text color inside the paper and ink families, with vermilion as the single accent.",
+      "Do set headlines in Crimson Pro and reading text in Source Serif 4; use Inter only for controls.",
+      "Do use ink-brown tinted shadows and lift them on hover.",
+      "Do use deep vermilion (#C0392B), not bright, for vermilion text on paper.",
+      "Do keep body line height at 1.75 and paragraphs to 65 to 75ch."
+    ],
+    "donts": [
+      "Don't use pure white, pure black, or cool grays.",
+      "Don't use vermilion for more than one competing focal point per screen.",
+      "Don't use sharp corners or pill shapes; stay in the 12 to 24px radius range.",
+      "Don't use gray or black drop shadows.",
+      "Don't reference undefined tokens (bg-surface, text-secondary, --color-primary, --color-ink-200).",
+      "Don't treat the dark-mode block as real: it maps to the same light values.",
+      "Don't introduce the teal palette from design-tokens.ts and the PRD; the shipped site is vermilion-only."
+    ]
+  }
+}
