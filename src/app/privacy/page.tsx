@@ -42,7 +42,7 @@ export default function PrivacyPolicy() {
 
             <h3>2.1 Information You Provide Directly</h3>
             <h4>Email Address</h4>
-            <p>When you sign up for our TestFlight beta or join our waiting list, we require your email address. When you contact us for support or provide feedback, we collect the email, subject, and message content.</p>
+            <p>When you sign up for our TestFlight beta, we require your email address. When you contact us for support or provide feedback, we collect the email, subject, and message content.</p>
 
             <h4>Account Information</h4>
             <p>When you create an Umbrella account, we collect your email address, your date of birth (to confirm you meet our minimum age), and a timestamp recording that you consented to this policy. We store your password only as a salted argon2id hash; we never store or see it in plain text.</p>

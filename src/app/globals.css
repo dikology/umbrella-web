@@ -81,13 +81,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Headings - Display font */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.025em;
-  color: var(--color-text);
+/* Headings - Display font.
+   Layered for the same reason as the link rules below: unlayered, the colour
+   here outranks Tailwind's utilities, so `text-white` headings on the coral
+   CTA band and the dark footer were being repainted in body ink. */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    color: var(--color-text);
+  }
 }
 
 /* UI Elements - Sans-serif */
@@ -101,18 +106,26 @@ p {
   margin-bottom: 1em;
 }
 
-/* Links - subtle underline */
-a {
-  color: var(--color-primary);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
+/* Links - subtle underline.
+   These must live in @layer base. Unlayered, they outrank every Tailwind
+   text-colour utility, so `text-white` on a link-shaped button lost and the
+   CTA rendered coral-on-coral. They also pointed at --color-primary, which is
+   never defined: an invalid `color` computes to `inherit`, so links quietly
+   took their parent's colour instead of the accent. Deep vermilion is the
+   text-safe accent per DESIGN.md. */
+@layer base {
+  a {
+    color: var(--color-coral-600);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
 
-a:hover {
-  color: var(--color-primary-hover);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
+  a:hover {
+    color: var(--color-coral-700);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
 }
 
 /* Selection color */

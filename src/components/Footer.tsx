@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { TESTFLIGHT_URL } from '@/lib/testflight';
 
 export default function Footer() {
   const scrollToSection = (sectionId: string) => {
@@ -85,13 +86,26 @@ export default function Footer() {
               Product
             </h3>
             <ul className="font-body space-y-3">
+              {/* Hidden until a real invite link exists — see src/lib/testflight.ts */}
+              {TESTFLIGHT_URL && (
+                <li>
+                  <a
+                    href={TESTFLIGHT_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-ink-300 hover:text-coral-400 transition-colors"
+                  >
+                    iOS App (TestFlight)
+                  </a>
+                </li>
+              )}
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/signup"
                   className="text-ink-300 hover:text-coral-400 transition-colors"
                 >
-                  iOS App (TestFlight)
-                </a>
+                  Sign up
+                </Link>
               </li>
               <li>
                 <Link

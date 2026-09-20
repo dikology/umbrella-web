@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Button from './Button';
+import { buttonClasses } from './Button';
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -115,12 +115,12 @@ export default function Navigation() {
             >
               Log in
             </Link>
-            <Button
-              onClick={() => scrollToSection('cta')}
-              size="sm"
+            <Link
+              href="/signup"
+              className={buttonClasses({ size: 'sm' })}
             >
-              Get Beta Access
-            </Button>
+              Sign up
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -203,12 +203,12 @@ export default function Navigation() {
               Log in
             </Link>
             <div className="pt-4 pb-3 border-t border-paper-300">
-              <Button
-                onClick={() => scrollToSection('cta')}
-                className="w-full"
+              <Link
+                href="/signup"
+                className={buttonClasses({ className: 'w-full' })}
               >
-                Get Beta Access
-              </Button>
+                Sign up
+              </Link>
             </div>
           </div>
         </div>

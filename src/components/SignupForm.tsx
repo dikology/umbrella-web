@@ -129,7 +129,7 @@ export default function SignupForm() {
           />
           <span>
             I agree to the{' '}
-            <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:text-teal-700 underline">
+            <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-coral-600 hover:text-coral-700 underline">
               Privacy Policy
             </a>{' '}
             and to Umbrella processing my data as described there.

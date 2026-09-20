@@ -4,7 +4,7 @@ export default function Roadmap() {
       phase: "Phase 1",
       timeframe: "Now",
       title: "iOS TestFlight Beta",
-      items: ["Landing Page", "Privacy Policy", "Email Collection", "Smart Dictionary"],
+      items: ["Landing Page", "Privacy Policy", "Accounts", "Smart Dictionary"],
       status: "current"
     },
     {

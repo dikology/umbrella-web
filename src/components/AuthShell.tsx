@@ -26,4 +26,4 @@ export default function AuthShell({ title, children, footer }: AuthShellProps) {
 }
 
 export const authLinkClass =
-  'font-medium text-teal-600 hover:text-teal-700 underline rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-teal-500';
+  'font-medium text-coral-600 hover:text-coral-700 underline rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-coral-500';
