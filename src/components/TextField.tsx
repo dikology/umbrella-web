@@ -23,7 +23,7 @@ export default function TextField({ label, error, hint, className = '', ...props
           font-ui w-full rounded-xl px-4 py-3
           bg-paper-50 text-ink-800 placeholder:text-ink-400
           border ${error ? 'border-coral-500' : 'border-paper-400'}
-          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 focus:border-teal-500
+          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral-500 focus:border-coral-500
           ${className}
         `}
         {...props}

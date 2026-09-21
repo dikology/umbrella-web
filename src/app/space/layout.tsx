@@ -1,6 +1,7 @@
+import Link from "next/link";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { learnerSchema } from "@/lib/api";
+import LogoutButton from "@/components/LogoutButton";
 
 export const metadata = {
   title: "Your space - Umbrella",
@@ -20,24 +21,20 @@ export default async function SpaceLayout({ children }: { children: React.ReactN
   if (response.status === 401) redirect("/login");
   if (!response.ok) throw new Error(`GET /api/v1/me failed with ${response.status}`);
 
-  const learner = learnerSchema.parse(await response.json());
-
   return (
-    <main className="min-h-screen bg-paper-100 flex flex-col items-center px-4 py-12">
-      <div className="w-full max-w-md bg-paper-50 border border-paper-300 rounded-xl shadow-md p-8">
-        <h1 className="font-display text-3xl font-semibold text-ink-700 mb-6">Your space</h1>
-        <dl className="font-ui text-sm text-ink-700 space-y-3 mb-6">
-          <div>
-            <dt className="text-ink-500">Email</dt>
-            <dd>{learner.email}</dd>
-          </div>
-          <div>
-            <dt className="text-ink-500">Role</dt>
-            <dd>{learner.role}</dd>
-          </div>
-        </dl>
-        {children}
-      </div>
-    </main>
+    <div className="min-h-screen bg-paper-100">
+      <header className="border-b border-paper-300 bg-paper-50">
+        <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-4 sm:px-6">
+          <Link
+            href="/space"
+            className="font-display text-2xl font-semibold tracking-tight text-coral-600 hover:text-coral-700 hover:no-underline rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-coral-500"
+          >
+            Umbrella
+          </Link>
+          <LogoutButton />
+        </div>
+      </header>
+      <main className="mx-auto max-w-3xl px-4 pb-24 pt-10 sm:px-6 sm:pt-14">{children}</main>
+    </div>
   );
 }

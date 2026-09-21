@@ -1,5 +1,10 @@
-import LogoutButton from '@/components/LogoutButton';
+import Library from '@/components/Library';
 
-export default function SpacePage() {
-  return <LogoutButton />;
+export const metadata = {
+  title: 'Library - Umbrella',
+  robots: 'noindex',
+};
+
+export default function LibraryPage() {
+  return <Library />;
 }

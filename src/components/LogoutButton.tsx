@@ -23,15 +23,15 @@ export default function LogoutButton() {
   }
 
   return (
-    <>
+    <div className="flex items-center gap-3">
       {error && (
-        <p role="alert" className="font-ui text-sm text-coral-600 mb-3">
+        <p role="alert" className="font-ui text-sm text-coral-600 mb-0">
           {error}
         </p>
       )}
-      <Button variant="secondary" onClick={onClick} disabled={submitting}>
+      <Button variant="ghost" size="sm" onClick={onClick} disabled={submitting}>
         {submitting ? 'Logging out…' : 'Log out'}
       </Button>
-    </>
+    </div>
   );
 }

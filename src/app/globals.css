@@ -48,6 +48,15 @@
   --radius-xl: 1.5rem;
 }
 
+/* Chinese writing: Source Serif 4 sets any Latin in it, and Han falls through
+   to a Song (Ming) face, the serif of Chinese print, before any sans. A utility
+   rather than a theme token, because next/font defines --font-source-serif on
+   <body>, not on :root, so the reference has to resolve where it is used. */
+@utility font-han {
+  font-family: var(--font-source-serif), "Songti SC", "STSong", "Noto Serif CJK SC",
+    "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
+}
+
 :root {
   /* CSS custom properties for dynamic values - using design tokens */
   --color-text: var(--color-ink-400);
