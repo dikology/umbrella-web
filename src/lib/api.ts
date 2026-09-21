@@ -81,6 +81,31 @@ export const textSchema = z.object({
 });
 export type Text = z.infer<typeof textSchema>;
 
+// One sentence a Word was marked in, copied out of its Text when it was marked.
+// `word_start` and `word_end` count code points into `sentence`, as the API does.
+export const sightingSchema = z.object({
+  sentence: z.string(),
+  word_start: z.number(),
+  word_end: z.number(),
+  sighted_at: z.string(),
+  // Null once the Text is deleted; the sentence outlives it.
+  text: z.object({ id: z.string(), title: z.string() }).nullable(),
+});
+export type Sighting = z.infer<typeof sightingSchema>;
+
+// A Marked Word as the list shows it: pinyin and definition are the Word's first
+// Dictionary Entry, both null for a Word the dictionary doesn't know.
+export const markedWordSchema = z.object({
+  simplified: z.string(),
+  pinyin: z.string().nullable(),
+  definition: z.string().nullable(),
+  marked_at: z.string(),
+  sightings: z.array(sightingSchema),
+});
+export type MarkedWord = z.infer<typeof markedWordSchema>;
+
+export const markedWordsSchema = z.object({ marked_words: z.array(markedWordSchema) });
+
 // Mirror umbrella-api's TITLE_MAX_LENGTH and BODY_MAX_LENGTH. The API counts
 // code points, not UTF-16 units, so an astral Han character counts once here too.
 export const TITLE_MAX_LENGTH = 200;
@@ -129,12 +154,13 @@ export class ApiError extends Error {
 
 async function request<T>(
   path: string,
-  init: { method: string; body?: unknown },
+  init: { method: string; body?: unknown; keepalive?: boolean },
   schema?: z.ZodType<T>,
 ): Promise<T> {
   const response = await fetch(`/api/v1${path}`, {
     method: init.method,
     credentials: "include",
+    keepalive: init.keepalive,
     headers: init.body === undefined ? undefined : { "Content-Type": "application/json" },
     body: init.body === undefined ? undefined : JSON.stringify(init.body),
   });
@@ -169,6 +195,8 @@ export const api = {
   // and unmarked by its simplified form, everywhere at once.
   markWord: (segmentId: number) =>
     request<void>("/marked-words", { method: "POST", body: { segment_id: segmentId } }),
-  unmarkWord: (simplified: string) =>
-    request<void>(`/marked-words/${encodeURIComponent(simplified)}`, { method: "DELETE" }),
+  // `keepalive` lets an unmark still reach the API as the page it was made on unloads.
+  unmarkWord: (simplified: string, { keepalive = false } = {}) =>
+    request<void>(`/marked-words/${encodeURIComponent(simplified)}`, { method: "DELETE", keepalive }),
+  listMarkedWords: () => request("/marked-words", { method: "GET" }, markedWordsSchema),
 };

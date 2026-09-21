@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ApiError, api, type TextSummary } from '@/lib/api';
-import { formatAddedDate } from '@/lib/format';
+import { formatDate } from '@/lib/format';
 import Button, { buttonClasses } from './Button';
 import DeleteTextDialog from './DeleteTextDialog';
 import { TrashIcon } from './icons';
@@ -118,7 +118,7 @@ export default function Library() {
                     dateTime={text.created_at}
                     className="font-ui shrink-0 text-xs tabular-nums text-ink-400"
                   >
-                    {formatAddedDate(text.created_at)}
+                    {formatDate(text.created_at)}
                   </time>
                 </span>
                 <span lang="zh" className="font-han mt-1.5 block truncate text-ink-400">

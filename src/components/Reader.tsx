@@ -13,7 +13,8 @@ import {
 } from 'react';
 import { useRouter } from 'next/navigation';
 import { ApiError, api, type Segment, type Text } from '@/lib/api';
-import { formatAddedDate } from '@/lib/format';
+import { formatDate } from '@/lib/format';
+import { markedWordClasses } from './marked-word';
 import WordCard, { type CardPlacement } from './WordCard';
 
 // Below Tailwind's `sm`, a card hung off a Word would cover the line it explains,
@@ -217,7 +218,7 @@ export default function Reader({ text }: { text: Text }) {
           {text.title}
         </h1>
         <div className="font-ui text-sm text-ink-400">
-          Added <time dateTime={text.created_at}>{formatAddedDate(text.created_at)}</time>
+          Added <time dateTime={text.created_at}>{formatDate(text.created_at)}</time>
           <span aria-hidden="true"> · </span>
           Tap or click a Word for its Dictionary Entries
         </div>
@@ -314,9 +315,7 @@ const WordSpan = memo(function WordSpan({
       aria-describedby={marked ? 'marked-word-note' : undefined}
       className={[
         'cursor-pointer rounded-[3px] transition-colors duration-150 [box-decoration-break:clone] [-webkit-box-decoration-break:clone] focus:outline-none focus-visible:ring-2 focus-visible:ring-coral-500',
-        marked
-          ? 'bg-coral-100/60 underline decoration-coral-600 decoration-[1.5px] underline-offset-[0.28em] hover:bg-coral-100'
-          : 'hover:bg-paper-300',
+        marked ? `${markedWordClasses} hover:bg-coral-100` : 'hover:bg-paper-300',
         open ? 'ring-[1.5px] ring-ink-500' : '',
       ].join(' ')}
     >

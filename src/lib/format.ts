@@ -1,6 +1,6 @@
-const addedDate = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' });
+const dateFormat = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' });
 
-/** When a Text went into the Library, as a Learner reads a date in their own locale. */
-export function formatAddedDate(iso: string) {
-  return addedDate.format(new Date(iso));
+/** A day something happened, such as a Text added or a Word marked, as a Learner reads a date in their own locale. */
+export function formatDate(iso: string) {
+  return dateFormat.format(new Date(iso));
 }

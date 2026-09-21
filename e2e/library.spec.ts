@@ -25,7 +25,7 @@ test("adding a Text lands in it, and the Library lists it", async ({ page }) => 
   await expect(page.getByRole("heading", { name: "春晓", level: 1 })).toBeVisible();
   await expect(page.getByText("处处闻啼鸟。")).toBeVisible();
 
-  await page.getByRole("link", { name: "Library" }).click();
+  await page.getByRole("main").getByRole("link", { name: "Library" }).click();
   await expect(page).toHaveURL(/\/space$/);
   await expect(page.getByRole("link", { name: /春晓/ })).toBeVisible();
 });
