@@ -40,13 +40,44 @@ export type TextSummary = z.infer<typeof textSummarySchema>;
 
 export const librarySchema = z.object({ texts: z.array(textSummarySchema) });
 
-// A Text as the Reader opens it. The response also carries segments, words and
-// marked words; this schema grows to cover them when the Reader needs them.
+export const dictionaryEntrySchema = z.object({
+  simplified: z.string(),
+  traditional: z.string(),
+  pinyin: z.string(),
+  pinyin_numbered: z.string(),
+  definitions: z.array(z.string()),
+});
+export type DictionaryEntry = z.infer<typeof dictionaryEntrySchema>;
+
+// What the Dictionary says about one Word: its own entries, or, when it has none,
+// the entries of the longest parts it does know (ADR-0003 in umbrella-api).
+export const wordSchema = z.object({
+  entries: z.array(dictionaryEntrySchema),
+  parts: z.array(z.object({ simplified: z.string(), entries: z.array(dictionaryEntrySchema) })),
+});
+export type Word = z.infer<typeof wordSchema>;
+
+// One Segment in reading order. Render `surface`, not body[start:end]: the API's
+// offsets count code points, and JavaScript strings count UTF-16 units.
+export const segmentSchema = z.object({
+  id: z.number(),
+  surface: z.string(),
+  // A Word's identity and its key in `words`; null for plain writing.
+  simplified: z.string().nullable(),
+  is_word: z.boolean(),
+});
+export type Segment = z.infer<typeof segmentSchema>;
+
+// A Text as the Reader opens it: every Word's Dictionary Entries come with it, so
+// a tap needs no request of its own.
 export const textSchema = z.object({
   id: z.string(),
   title: z.string(),
   body: z.string(),
   created_at: z.string(),
+  segments: z.array(segmentSchema),
+  words: z.record(z.string(), wordSchema),
+  marked_words: z.array(z.string()),
 });
 export type Text = z.infer<typeof textSchema>;
 
@@ -134,4 +165,10 @@ export const api = {
     request(`/texts/${encodeURIComponent(id)}`, { method: "GET" }, textSchema),
   deleteText: (id: string) =>
     request<void>(`/texts/${encodeURIComponent(id)}`, { method: "DELETE" }),
+  // A Word is marked by the Segment it was tapped in, which gives it its Sighting,
+  // and unmarked by its simplified form, everywhere at once.
+  markWord: (segmentId: number) =>
+    request<void>("/marked-words", { method: "POST", body: { segment_id: segmentId } }),
+  unmarkWord: (simplified: string) =>
+    request<void>(`/marked-words/${encodeURIComponent(simplified)}`, { method: "DELETE" }),
 };

@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ApiError, api, type Text } from '@/lib/api';
-import { formatAddedDate } from '@/lib/format';
 import Button from './Button';
+import Reader from './Reader';
 
 type State =
   | { status: 'loading' }
@@ -13,10 +13,7 @@ type State =
   | { status: 'error' }
   | { status: 'ready'; text: Text };
 
-/**
- * A Text as written, line breaks and all. It stands in for the Reader
- * (tappable Words, Dictionary Entries, marking), which replaces it.
- */
+/** Opens a Text for the Reader, and says so when it can't. */
 export default function TextView({ id }: { id: string }) {
   const router = useRouter();
   const [state, setState] = useState<State>({ status: 'loading' });
@@ -81,23 +78,5 @@ export default function TextView({ id }: { id: string }) {
     );
   }
 
-  const { text } = state;
-  return (
-    <article className="mt-6">
-      <header className="mb-10 border-b border-paper-300 pb-6">
-        <h1 className="font-han mb-2 text-4xl leading-tight text-ink-700 break-words sm:text-5xl">
-          {text.title}
-        </h1>
-        <p className="font-ui mb-0 text-sm text-ink-400">
-          Added <time dateTime={text.created_at}>{formatAddedDate(text.created_at)}</time>
-        </p>
-      </header>
-      <div
-        lang="zh"
-        className="font-han max-w-[36em] whitespace-pre-wrap break-words text-xl leading-[1.9] tracking-normal text-ink-700"
-      >
-        {text.body}
-      </div>
-    </article>
-  );
+  return <Reader text={state.text} />;
 }

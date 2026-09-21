@@ -188,3 +188,13 @@ html {
     background: var(--color-paper-300);
   }
 }
+
+/* The Reader's one moment of motion: a Word's card settles in beside it, or
+   its sheet rises on a phone. Both run only under motion-safe. */
+@keyframes word-card-in {
+  from { opacity: 0; transform: translateY(4px); }
+}
+
+@keyframes sheet-in {
+  from { transform: translateY(100%); }
+}

@@ -29,3 +29,11 @@ export function ChevronLeftIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+export function CloseIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M5 5l10 10M15 5 5 15" />
+    </svg>
+  );
+}
