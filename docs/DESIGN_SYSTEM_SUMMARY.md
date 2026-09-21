@@ -38,9 +38,8 @@ Successfully implemented a comprehensive book-inspired design system for the Umb
 - ✅ **Footer** - Dark theme with better contrast
 
 ### 5. **Design Tokens & Utilities**
-- ✅ `/src/styles/design-tokens.ts` - Centralized design values
 - ✅ `/src/styles/common-classes.ts` - Reusable class combinations
-- ✅ Updated `globals.css` - Complete theme configuration
+- ✅ Updated `globals.css` - Complete theme configuration; its `@theme` block holds the design tokens
 
 ### 6. **Documentation**
 - ✅ `/docs/design-system.md` - Comprehensive design system guide
@@ -119,7 +118,6 @@ umbrella-web/
 │   │   ├── CTA.tsx                   ← Gradient CTA
 │   │   └── Footer.tsx                ← Dark footer
 │   └── styles/
-│       ├── design-tokens.ts          ← Design values
 │       └── common-classes.ts         ← Utility classes
 ```
 

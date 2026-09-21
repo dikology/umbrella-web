@@ -455,7 +455,7 @@ Consider adding:
 
 ## Resources
 
-- **Design Tokens**: `/src/styles/design-tokens.ts`
+- **Design Tokens**: the `@theme` block in `/src/app/globals.css`
 - **Global Styles**: `/src/app/globals.css`
 - **Components**: `/src/components/`
 - **Layout**: `/src/app/layout.tsx`

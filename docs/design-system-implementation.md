@@ -47,13 +47,7 @@ Successfully implemented a book-inspired design system for the Umbrella landing 
 
 ### 4. Design Tokens
 
-**Created `/src/styles/design-tokens.ts`:**
-- Centralized design system values
-- Typography scales
-- Color palettes
-- Spacing systems
-- Shadow definitions
-- Border radius values
+Design tokens (colour palettes, typography, shadows, radii) live in the `@theme` block of `/src/app/globals.css`.
 
 ### 5. Enhanced Styling
 

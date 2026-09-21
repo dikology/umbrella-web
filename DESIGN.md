@@ -208,4 +208,4 @@ Ink Black device frame (40px radius, 8px bezel) with a notch, Bright Paper scree
 - **Don't** use gray or black drop shadows.
 - **Don't** reference undefined tokens (`bg-surface`, `text-secondary`, `--color-primary`, `--color-ink-200`): they are used in code but not declared in `globals.css`, so they currently resolve to nothing. Use the paper/ink/vermilion tokens above.
 - **Don't** treat the dark-mode block as real: it currently maps to the same light values, so the site has no dark theme yet.
-- **Don't** introduce the teal palette that exists in `src/styles/design-tokens.ts` and the PRD; the shipped site is vermilion-only.
+- **Don't** introduce teal (Tailwind's default `teal-*`, or the teal primary in the PRD and the legacy `docs/` design-system pages); the shipped site is vermilion-only. The only color families are `coral-*`, `paper-*` and `ink-*`, defined in the `@theme` block of `src/app/globals.css`.

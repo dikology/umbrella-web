@@ -100,7 +100,7 @@
       "Don't use gray or black drop shadows.",
       "Don't reference undefined tokens (bg-surface, text-secondary, --color-primary, --color-ink-200).",
       "Don't treat the dark-mode block as real: it maps to the same light values.",
-      "Don't introduce the teal palette from design-tokens.ts and the PRD; the shipped site is vermilion-only."
+      "Don't introduce teal (Tailwind's default teal-*, or the teal primary in the PRD and legacy docs); the shipped site is vermilion-only. Use only coral-*, paper-* and ink-* from the @theme block in src/app/globals.css."
     ]
   }
 }

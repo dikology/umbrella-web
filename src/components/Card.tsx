@@ -116,7 +116,7 @@ export function PhoneMockupCard({
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-ink-800 rounded-b-2xl z-10"></div>
           
           {/* Screenshot placeholder */}
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-teal-50 to-paper-100 relative">
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-paper-50 to-paper-200 relative">
             {imageSrc ? (
               <Image
                 src={imageSrc}

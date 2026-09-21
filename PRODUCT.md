@@ -28,7 +28,7 @@ Product is in development. The iOS app is in TestFlight beta; a web app is also 
 - Open decisions: which languages, TestFlight URL.
 
 ## Brand Commitments
-Name "Umbrella". The incumbent design system is `DESIGN.md`: warm paper and ink with a single vermilion accent (`coral-*` in code). Treat it as incumbent, not re-decided here. The teal primary in `docs/design-system.md` and the PRD was never shipped; `src/styles/design-tokens.ts` still carries it, and it should not be reintroduced.
+Name "Umbrella". The incumbent design system is `DESIGN.md`: warm paper and ink with a single vermilion accent (`coral-*` in code). Treat it as incumbent, not re-decided here. The teal primary in `docs/design-system.md` and the PRD was never shipped, and it should not be reintroduced.
 
 ## Evidence on Hand
 Little: no live TestFlight link, no real app screenshots, and no real testers or testimonials confirmed. Future work must not fabricate testimonials, tester counts, ratings, or screenshots. The unverified hero line "Join testers already learning with Umbrella" has been removed. Every TestFlight CTA is wired to `NEXT_PUBLIC_TESTFLIGHT_URL` and hides itself while that is unset, so publishing a link is a config change, not a code change.

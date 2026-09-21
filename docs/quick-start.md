@@ -426,7 +426,7 @@ hover:text-teal-700
 |------|---------|
 | Colors | `globals.css` or this guide |
 | Components | `/src/components/` |
-| Tokens | `/src/styles/design-tokens.ts` |
+| Tokens | the `@theme` block in `/src/app/globals.css` |
 | Common classes | `/src/styles/common-classes.ts` |
 | Full documentation | `/docs/design-system.md` |
 
@@ -507,7 +507,7 @@ hover:text-teal-700
 
 - **Full Documentation**: `/docs/design-system.md`
 - **Implementation Guide**: `/docs/design-system-implementation.md`
-- **Design Tokens**: `/src/styles/design-tokens.ts`
+- **Design Tokens**: the `@theme` block in `/src/app/globals.css`
 - **Common Classes**: `/src/styles/common-classes.ts`
 
 ---

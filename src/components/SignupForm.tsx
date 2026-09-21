@@ -125,7 +125,7 @@ export default function SignupForm() {
             onChange={(e) => setConsent(e.target.checked)}
             aria-invalid={fieldErrors.consent ? true : undefined}
             aria-describedby={fieldErrors.consent ? 'consent-error' : undefined}
-            className="mt-0.5 h-5 w-5 rounded border-paper-400 accent-teal-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+            className="mt-0.5 h-5 w-5 rounded border-paper-400 accent-coral-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-coral-500"
           />
           <span>
             I agree to the{' '}
