@@ -1,9 +1,10 @@
 import { expect, test, type BrowserContext, type Page } from "@playwright/test";
 import { signUp } from "./signup";
 
-// 春天 appears twice, so a mark has two places to show. 春眠 is a Word CEDICT
-// doesn't know as a whole, so it comes with its parts' entries instead.
-const BODY = "春天来了。\n北京大学生喜欢春天。春眠不觉晓。";
+// 春天 appears twice, so a mark has two places to show. jieba keeps 今天天气 whole
+// and CEDICT doesn't know it, so it comes with its parts' entries instead. Every
+// entry asserted here is in umbrella-api's CEDICT fixture, which CI loads.
+const BODY = "春天来了。\n北京大学生喜欢春天。今天天气很好。";
 
 // One Learner for the whole file: signups are rate-limited, and the suite as a
 // whole must stay under the API's limit. Each test adds its own Text, and no two
@@ -53,10 +54,10 @@ test("tapping a Word shows its Dictionary Entries without asking the API, and ne
   await expect(card).toContainText("to like; to be fond of");
   await expect(card).toContainText("喜歡");
 
-  await word(page, "春眠").click();
-  const parts = page.getByRole("dialog", { name: "春眠" });
+  await word(page, "今天天气").click();
+  const parts = page.getByRole("dialog", { name: "今天天气" });
   await expect(parts).toContainText("Not in the dictionary as a whole");
-  await expect(parts).toContainText("眠");
+  await expect(parts).toContainText("weather");
 
   expect(calls).toEqual([]);
   await page.reload();

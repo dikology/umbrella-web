@@ -33,6 +33,13 @@ jobs:
         working-directory: umbrella-api
       - run: docker compose exec -T api alembic upgrade head
         working-directory: umbrella-api
+      # The Reader needs Dictionary Entries, and CI never downloads CC-CEDICT: load
+      # the API's committed sample. .dockerignore keeps tests/ out of the image,
+      # so the file goes into the container first.
+      - run: |
+          docker compose cp tests/fixtures/cedict-sample.u8 api:/tmp/cedict-sample.u8
+          docker compose exec -T api umbrella-api import-dictionary --file /tmp/cedict-sample.u8
+        working-directory: umbrella-api
 
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
