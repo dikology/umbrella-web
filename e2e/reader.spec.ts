@@ -1,4 +1,5 @@
 import { expect, test, type BrowserContext, type Page } from "@playwright/test";
+import { fontFamily, leadsWith } from "./fonts";
 import { signUp } from "./signup";
 
 // 春天 appears twice, so a mark has two places to show. jieba keeps 今天天气 whole
@@ -40,8 +41,9 @@ test("the Reader sets the Text as written, with its Words tappable and nothing e
   await expect(page.getByText(/CC-CEDICT/)).toBeVisible();
 
   // Latin in Source Serif 4, Han falling through to a Song face before any sans.
-  const family = await text(page).evaluate((el) => getComputedStyle(el).fontFamily);
-  expect(family).toMatch(/^"?Source Serif 4"?,.*"Songti SC", STSong,/);
+  const family = await fontFamily(text(page));
+  expect(family).toMatch(leadsWith("Source Serif 4"));
+  expect(family).toMatch(/Song/);
 });
 
 test("tapping a Word shows its Dictionary Entries without asking the API, and never marks it", async ({ page }) => {

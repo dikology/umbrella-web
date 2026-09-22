@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { fontFamily, leadsWith } from "./fonts";
 import { signUp } from "./signup";
 
 test("a new Learner's Library is empty and leads to adding a first Text", async ({ page }) => {
@@ -19,7 +20,7 @@ test("adding a Text lands in it, and the Library lists it", async ({ page }) => 
 
   // The paste is set as the Reader will set it, not in the UI sans.
   const box = page.getByLabel("Chinese text");
-  expect(await box.evaluate((el) => getComputedStyle(el).fontFamily)).toMatch(/^"?Source Serif 4"?,/);
+  expect(await fontFamily(box)).toMatch(leadsWith("Source Serif 4"));
 
   await page.getByLabel("Title").fill("春晓");
   await box.fill(POEM);

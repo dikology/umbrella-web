@@ -132,7 +132,7 @@ A warm-neutral palette of paper and ink, punctuated by a single vermilion accent
 **Display Font:** Crimson Pro (with Georgia, serif)
 **Body Font:** Source Serif 4 (with Georgia, Times New Roman, serif)
 **UI Font:** Inter (with -apple-system, sans-serif); buttons, inputs and navigation only
-**Han Font:** Source Serif 4 for any Latin, then a Song (Ming) face ("Songti SC", STSong, Noto Serif CJK SC, Noto Serif SC, Source Han Serif SC, SimSun, serif) for the Chinese, via the `font-han` token. Used for every Text, its title, and the paste box.
+**Han Font:** Source Serif 4 for any Latin, then a Song (Ming) face ("Songti SC", STSong, Noto Serif CJK SC, Noto Serif SC, Source Han Serif SC, SimSun, serif) for the Chinese, via the `font-han` token. Used for all Chinese writing: Texts and their titles, Words, and the paste box.
 **Mono Font:** Geist Mono is loaded but unused in the current site.
 
 **Character:** A bookish pairing: Crimson Pro's high-contrast headlines over Source Serif 4's sturdy screen-tuned body, with Inter kept to the controls so the interface reads as tooling around a text.

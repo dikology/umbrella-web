@@ -1,8 +1,5 @@
-import { expect, test, type Locator } from "@playwright/test";
-
-// The DESIGN.md faces resolve by name. This checks the declared family chain,
-// not glyph metrics, so it holds whether or not the webfont has finished loading.
-const family = (locator: Locator) => locator.evaluate((el) => getComputedStyle(el).fontFamily);
+import { expect, test } from "@playwright/test";
+import { fontFamily, leadsWith } from "./fonts";
 
 test.describe("the landing page sets the DESIGN.md typefaces", () => {
   test.beforeEach(async ({ page }) => {
@@ -10,23 +7,25 @@ test.describe("the landing page sets the DESIGN.md typefaces", () => {
   });
 
   test("the font tokens resolve at the document root", async ({ page }) => {
-    const body = await page.evaluate(() =>
-      getComputedStyle(document.documentElement).getPropertyValue("--font-body").trim(),
+    const tokens = await page.evaluate(() =>
+      ["--font-display", "--font-body", "--font-ui", "--font-han"].map((token) =>
+        getComputedStyle(document.documentElement).getPropertyValue(token).trim(),
+      ),
     );
-    expect(body).not.toBe("");
+    for (const value of tokens) expect(value).not.toBe("");
   });
 
   test("headlines are Crimson Pro, body copy Source Serif 4, and buttons Inter", async ({ page }) => {
     const hero = page.locator("#hero");
 
-    expect(await family(hero.locator("h1"))).toMatch(/^"?Crimson Pro"?,/);
-    expect(await family(hero.locator("p").first())).toMatch(/^"?Source Serif 4"?,/);
-    expect(await family(hero.getByRole("button", { name: "View Features" }))).toMatch(/^"?Inter"?,/);
+    expect(await fontFamily(hero.locator("h1"))).toMatch(leadsWith("Crimson Pro"));
+    expect(await fontFamily(hero.locator("p").first())).toMatch(leadsWith("Source Serif 4"));
+    expect(await fontFamily(hero.getByRole("button", { name: "View Features" }))).toMatch(leadsWith("Inter"));
   });
 
   test("a control that asks for another face keeps it", async ({ page }) => {
     // The wordmark is a <button>, but it is set in the display face.
     const wordmark = page.getByRole("navigation").getByRole("button", { name: "Umbrella" });
-    expect(await family(wordmark)).toMatch(/^"?Crimson Pro"?,/);
+    expect(await fontFamily(wordmark)).toMatch(leadsWith("Crimson Pro"));
   });
 });
