@@ -34,6 +34,10 @@
   --font-body: var(--font-source-serif);
   --font-ui: var(--font-inter);
   --font-mono: var(--font-geist-mono);
+  /* Chinese writing: Source Serif 4 sets any Latin in it, and Han falls through
+     to a Song (Ming) face, the serif of Chinese print, before any sans. */
+  --font-han: var(--font-source-serif), "Songti SC", "STSong", "Noto Serif CJK SC",
+    "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
   
   /* Shadows - Soft, paper-like */
   --shadow-sm: 0 1px 2px 0 rgba(74, 66, 55, 0.05);
@@ -46,15 +50,6 @@
   --radius-md: 0.75rem;
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
-}
-
-/* Chinese writing: Source Serif 4 sets any Latin in it, and Han falls through
-   to a Song (Ming) face, the serif of Chinese print, before any sans. A utility
-   rather than a theme token, because next/font defines --font-source-serif on
-   <body>, not on :root, so the reference has to resolve where it is used. */
-@utility font-han {
-  font-family: var(--font-source-serif), "Songti SC", "STSong", "Noto Serif CJK SC",
-    "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
 }
 
 :root {
@@ -101,12 +96,19 @@ body {
     line-height: 1.2;
     letter-spacing: -0.025em;
     color: var(--color-text);
+    /* Crimson Pro sets wider than the fallback sans did, so a narrow column
+       can strand a headline's last word on a line of its own. */
+    text-wrap: balance;
   }
 }
 
-/* UI Elements - Sans-serif */
-button, input, select, textarea {
-  font-family: var(--font-ui), -apple-system, BlinkMacSystemFont, sans-serif;
+/* UI Elements - Sans-serif.
+   Layered so a control that names its own face keeps it: the wordmark button
+   is font-display, and the paste box is font-han. */
+@layer base {
+  button, input, select, textarea {
+    font-family: var(--font-ui), -apple-system, BlinkMacSystemFont, sans-serif;
+  }
 }
 
 /* Enhanced readability for body text */

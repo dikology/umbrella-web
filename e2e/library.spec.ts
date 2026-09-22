@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { fontFamily, leadsWith } from "./fonts";
 import { signUp } from "./signup";
 
 test("a new Learner's Library is empty and leads to adding a first Text", async ({ page }) => {
@@ -17,8 +18,12 @@ test("adding a Text lands in it, and the Library lists it", async ({ page }) => 
   await signUp(page);
   await page.goto("/space/texts/new");
 
+  // The paste is set as the Reader will set it, not in the UI sans.
+  const box = page.getByLabel("Chinese text");
+  expect(await fontFamily(box)).toMatch(leadsWith("Source Serif 4"));
+
   await page.getByLabel("Title").fill("春晓");
-  await page.getByLabel("Chinese text").fill(POEM);
+  await box.fill(POEM);
   await page.getByRole("button", { name: "Add to Library" }).click();
 
   await expect(page).toHaveURL(/\/space\/texts\/[0-9a-f-]{36}$/);
