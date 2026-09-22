@@ -26,6 +26,9 @@ async function openNewText(page: Page) {
   await page.getByLabel("Chinese text").fill(BODY);
   await page.getByRole("button", { name: "Add to Library" }).click();
   await expect(page).toHaveURL(/\/space\/texts\/[0-9a-f-]{36}$/);
+  // The Reader fetches its Text after the URL changes; wait for it, so a test
+  // watching the network doesn't catch that fetch.
+  await expect(text(page)).toBeVisible();
 }
 
 const text = (page: Page) => page.locator('[lang="zh"]').filter({ hasText: "北京" });
