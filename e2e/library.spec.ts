@@ -17,8 +17,12 @@ test("adding a Text lands in it, and the Library lists it", async ({ page }) => 
   await signUp(page);
   await page.goto("/space/texts/new");
 
+  // The paste is set as the Reader will set it, not in the UI sans.
+  const box = page.getByLabel("Chinese text");
+  expect(await box.evaluate((el) => getComputedStyle(el).fontFamily)).toMatch(/^"?Source Serif 4"?,/);
+
   await page.getByLabel("Title").fill("春晓");
-  await page.getByLabel("Chinese text").fill(POEM);
+  await box.fill(POEM);
   await page.getByRole("button", { name: "Add to Library" }).click();
 
   await expect(page).toHaveURL(/\/space\/texts\/[0-9a-f-]{36}$/);

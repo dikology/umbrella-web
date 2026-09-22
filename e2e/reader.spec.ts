@@ -38,6 +38,10 @@ test("the Reader sets the Text as written, with its Words tappable and nothing e
   await expect(word(page, "春天")).toHaveCount(2);
   await expect(text(page).getByRole("button", { name: "。" })).toHaveCount(0);
   await expect(page.getByText(/CC-CEDICT/)).toBeVisible();
+
+  // Latin in Source Serif 4, Han falling through to a Song face before any sans.
+  const family = await text(page).evaluate((el) => getComputedStyle(el).fontFamily);
+  expect(family).toMatch(/^"?Source Serif 4"?,.*"Songti SC", STSong,/);
 });
 
 test("tapping a Word shows its Dictionary Entries without asking the API, and never marks it", async ({ page }) => {

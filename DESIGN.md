@@ -132,6 +132,7 @@ A warm-neutral palette of paper and ink, punctuated by a single vermilion accent
 **Display Font:** Crimson Pro (with Georgia, serif)
 **Body Font:** Source Serif 4 (with Georgia, Times New Roman, serif)
 **UI Font:** Inter (with -apple-system, sans-serif); buttons, inputs and navigation only
+**Han Font:** Source Serif 4 for any Latin, then a Song (Ming) face ("Songti SC", STSong, Noto Serif CJK SC, Noto Serif SC, Source Han Serif SC, SimSun, serif) for the Chinese, via the `font-han` token. Used for every Text, its title, and the paste box.
 **Mono Font:** Geist Mono is loaded but unused in the current site.
 
 **Character:** A bookish pairing: Crimson Pro's high-contrast headlines over Source Serif 4's sturdy screen-tuned body, with Inter kept to the controls so the interface reads as tooling around a text.
@@ -142,6 +143,8 @@ A warm-neutral palette of paper and ink, punctuated by a single vermilion accent
 - **Title** (600, 1.25rem, 1.2): Card and feature titles.
 - **Body** (400, 1rem to 1.5rem, 1.75, +0.01em): Paragraphs; lead paragraph scales up to 1.5rem on large screens. Keep to about 65 to 75ch.
 - **Label** (Inter 500, 0.875rem to 1rem): Buttons, navigation.
+
+Headings are balanced (`text-wrap: balance`), so a narrow column never strands a headline's last word. A control can name its own face and keep it: the wordmark is a button set in Crimson Pro, and the paste box is set in `font-han`.
 
 ### Named Rules
 **The Serif Voice Rule.** Reading content and headlines are serif. Inter is reserved for controls; never set a paragraph in it.

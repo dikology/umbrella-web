@@ -49,10 +49,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${crimsonPro.variable} ${sourceSerif.variable} ${inter.variable} ${geistMono.variable} antialiased`}
-      >
+    // The font variables go on <html>: Tailwind emits the @theme font tokens on
+    // :root, and they only resolve if the variables they reference exist there.
+    <html
+      lang="en"
+      className={`${crimsonPro.variable} ${sourceSerif.variable} ${inter.variable} ${geistMono.variable}`}
+    >
+      <body className="antialiased">
         {children}
       </body>
     </html>
