@@ -43,12 +43,28 @@ export const loginRequestSchema = z.object({
 });
 export type LoginRequest = z.infer<typeof loginRequestSchema>;
 
+export const coverageBandSchema = z.enum(["comfortable", "stretch", "too_hard"]);
+export type CoverageBand = z.infer<typeof coverageBandSchema>;
+
+// One Learner's Coverage of one Text: Known running Words out of every running Word
+// with a Dictionary Entry. Null where a Text has no running Word that counts.
+export const coverageSchema = z.object({
+  known: z.number(),
+  running: z.number(),
+  share: z.number(),
+  band: coverageBandSchema,
+});
+export type Coverage = z.infer<typeof coverageSchema>;
+
 // A Text as the Library lists it: enough to recognise it by, not to read.
 export const textSummarySchema = z.object({
   id: z.string(),
   title: z.string(),
   created_at: z.string(),
+  // When the Learner last finished it, or null if they never have.
+  finished_at: z.string().nullable(),
   preview: z.string(),
+  coverage: coverageSchema.nullable(),
 });
 export type TextSummary = z.infer<typeof textSummarySchema>;
 
@@ -68,6 +84,12 @@ export type DictionaryEntry = z.infer<typeof dictionaryEntrySchema>;
 export const wordSchema = z.object({
   entries: z.array(dictionaryEntrySchema),
   parts: z.array(z.object({ simplified: z.string(), entries: z.array(dictionaryEntrySchema) })),
+  // Null for a Word the HSK syllabus doesn't list, which is most Words.
+  hsk_level: hskLevelSchema.nullable(),
+  // How often the Word runs in this Text, and whether those runs count toward
+  // Coverage: with the Known Words, enough to recompute Coverage without asking.
+  running_count: z.number(),
+  counts_toward_coverage: z.boolean(),
 });
 export type Word = z.infer<typeof wordSchema>;
 
@@ -89,11 +111,23 @@ export const textSchema = z.object({
   title: z.string(),
   body: z.string(),
   created_at: z.string(),
+  finished_at: z.string().nullable(),
   segments: z.array(segmentSchema),
   words: z.record(z.string(), wordSchema),
   marked_words: z.array(z.string()),
+  // Never overlaps `marked_words`: marking a Known Word takes it out of here.
+  known_words: z.array(z.string()),
+  coverage: coverageSchema.nullable(),
 });
 export type Text = z.infer<typeof textSchema>;
+
+// What finishing a Text did: `known_words_added` is zero when finishing again adds nothing.
+export const finishingSchema = z.object({
+  text_id: z.string(),
+  finished_at: z.string(),
+  known_words_added: z.number(),
+});
+export type Finishing = z.infer<typeof finishingSchema>;
 
 // One sentence a Word was marked in, copied out of its Text when it was marked.
 // `word_start` and `word_end` count code points into `sentence`, as the API does.
@@ -113,6 +147,7 @@ export const markedWordSchema = z.object({
   simplified: z.string(),
   pinyin: z.string().nullable(),
   definition: z.string().nullable(),
+  hsk_level: hskLevelSchema.nullable(),
   marked_at: z.string(),
   sightings: z.array(sightingSchema),
 });
@@ -206,6 +241,9 @@ export const api = {
     request("/texts", { method: "POST", body }, textSummarySchema),
   openText: (id: string) =>
     request(`/texts/${encodeURIComponent(id)}`, { method: "GET" }, textSchema),
+  // Every Word in the Text with a Dictionary Entry that isn't Marked becomes Known.
+  finishText: (id: string) =>
+    request(`/texts/${encodeURIComponent(id)}/finishings`, { method: "POST" }, finishingSchema),
   deleteText: (id: string) =>
     request<void>(`/texts/${encodeURIComponent(id)}`, { method: "DELETE" }),
   // A Word is marked by the Segment it was tapped in, which gives it its Sighting,

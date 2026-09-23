@@ -93,7 +93,7 @@ test("unmarking can be undone, and is sent once the Learner moves on", async ({ 
 
   await row(page, "天气").getByRole("button", { name: "Unmark 天气" }).click();
   await expect(page.getByRole("button", { name: "Undo" })).toBeFocused();
-  await expect(page.getByRole("button", { name: "Undo" })).toHaveAccessibleDescription("Unmarked 天气");
+  await expect(page.getByRole("button", { name: "Undo" })).toHaveAccessibleDescription("Unmarked 天气. It’s a Known Word now.");
   await page.getByRole("button", { name: "Undo" }).click();
   await expect(row(page, "天气").getByRole("button", { name: "Unmark 天气" })).toBeFocused();
   expect(await markedOnServer(page)).toContain("天气");

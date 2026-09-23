@@ -40,6 +40,10 @@ jobs:
           docker compose cp tests/fixtures/cedict-sample.u8 api:/tmp/cedict-sample.u8
           docker compose exec -T api umbrella-api import-dictionary --file /tmp/cedict-sample.u8
         working-directory: umbrella-api
+      # HSK Levels for the Reader and Marked Words: the syllabus is vendored in the
+      # image, so the real one loads.
+      - run: docker compose exec -T api umbrella-api import-hsk
+        working-directory: umbrella-api
 
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
