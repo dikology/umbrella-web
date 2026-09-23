@@ -2,12 +2,26 @@ import { z } from "zod";
 
 // One schema per API payload: validates responses and documents the contract.
 
+// An HSK Level as the API writes it: 1-6, and "advanced" for bands 7-9.
+// Listed lowest first: `hskLevelSchema.values` keeps this order.
+export const hskLevelSchema = z.literal([1, 2, 3, 4, 5, 6, "advanced"]);
+export type HskLevel = z.infer<typeof hskLevelSchema>;
+
+// A Learner's answer to "what's your HSK Level?": a level, or null if they skipped.
+export const declaredLevelSchema = z.object({
+  level: hskLevelSchema.nullable(),
+  declared_at: z.string(),
+});
+export type DeclaredLevel = z.infer<typeof declaredLevelSchema>;
+
 export const learnerSchema = z.object({
   id: z.string(),
   email: z.string(),
   role: z.string(),
   date_of_birth: z.string(),
   created_at: z.string(),
+  // Null until the Learner has been asked, which is not the same as skipping.
+  declared_level: declaredLevelSchema.nullable(),
 });
 export type Learner = z.infer<typeof learnerSchema>;
 
@@ -184,6 +198,9 @@ export const api = {
   refresh: () => request("/auth/refresh", { method: "POST" }, learnerSchema),
   logout: () => request<void>("/auth/logout", { method: "POST" }),
   me: () => request("/me", { method: "GET" }, learnerSchema),
+  // Idempotent: the Learner holds one Declared Level, and null means none.
+  declareLevel: (level: HskLevel | null) =>
+    request("/me/declared-level", { method: "PUT", body: { level } }, declaredLevelSchema),
   listTexts: () => request("/texts", { method: "GET" }, librarySchema),
   addText: (body: AddTextRequest) =>
     request("/texts", { method: "POST", body }, textSummarySchema),

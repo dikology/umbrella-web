@@ -3,16 +3,31 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ApiError, api, type TextSummary } from '@/lib/api';
+import { ApiError, api, type DeclaredLevel, type TextSummary } from '@/lib/api';
 import { formatDate } from '@/lib/format';
+import { hskLevelName, wordsCoveredBy } from '@/lib/hsk';
 import Button, { buttonClasses } from './Button';
+import DeclaredLevelPrompt from './DeclaredLevelPrompt';
+import DeclaredLevelSetting from './DeclaredLevelSetting';
 import DeleteTextDialog from './DeleteTextDialog';
 import { TrashIcon } from './icons';
 
 type State =
   | { status: 'loading' }
   | { status: 'error' }
-  | { status: 'ready'; texts: TextSummary[] };
+  // `declared` is null until the Learner has been asked for their Declared Level,
+  // and 'unknown' when it didn't load: the Texts still show, without the question.
+  | { status: 'ready'; texts: TextSummary[]; declared: DeclaredLevel | null | 'unknown' };
+
+// The Declared Level beside the Texts; only a lost session fails the Library over it.
+const declaredLevel = () =>
+  api.me().then(
+    (learner) => learner.declared_level,
+    (error) => {
+      if (error instanceof ApiError && error.status === 401) throw error;
+      return 'unknown' as const;
+    },
+  );
 
 /** The Learner's Texts, newest first, as the API returns them. */
 export default function Library() {
@@ -20,15 +35,16 @@ export default function Library() {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const [state, setState] = useState<State>({ status: 'loading' });
   const [confirming, setConfirming] = useState<TextSummary | null>(null);
+  const [levelNews, setLevelNews] = useState('');
 
   const [attempt, setAttempt] = useState(0);
 
   // Fetched from the browser on purpose: the Library goes through the same-origin proxy.
   useEffect(() => {
     let cancelled = false;
-    api.listTexts().then(
-      ({ texts }) => {
-        if (!cancelled) setState({ status: 'ready', texts });
+    Promise.all([api.listTexts(), declaredLevel()]).then(
+      ([{ texts }, declared]) => {
+        if (!cancelled) setState({ status: 'ready', texts, declared });
       },
       (error) => {
         if (cancelled) return;
@@ -50,14 +66,41 @@ export default function Library() {
     setConfirming(null);
     setState((current) =>
       current.status === 'ready'
-        ? { status: 'ready', texts: current.texts.filter((text) => text.id !== id) }
+        ? { ...current, texts: current.texts.filter((text) => text.id !== id) }
         : current,
     );
     // The row that opened the dialog is gone, so focus can't return to it.
     headingRef.current?.focus();
   }
 
+  function onDeclared(declared: DeclaredLevel) {
+    setState((current) => (current.status === 'ready' ? { ...current, declared } : current));
+  }
+
+  // The answered question leaves the page, so focus goes back to the top of it.
+  function onAnswered(declared: DeclaredLevel) {
+    onDeclared(declared);
+    setLevelNews(
+      declared.level === null
+        ? 'No Declared Level for now. You can set one here any time.'
+        : `${hskLevelName(declared.level)} declared. ${wordsCoveredBy(declared.level)} are now Known, except any you’ve Marked.`,
+    );
+    headingRef.current?.focus();
+  }
+
+  function onLevelChanged(declared: DeclaredLevel) {
+    onDeclared(declared);
+    setLevelNews(
+      declared.level === null
+        ? 'Declared Level cleared.'
+        : `Declared Level changed to ${hskLevelName(declared.level)}.`,
+    );
+  }
+
   const texts = state.status === 'ready' ? state.texts : [];
+  const declared = state.status === 'ready' ? state.declared : 'unknown';
+  // An answer to show: the Learner has been asked, and it loaded.
+  const answered = declared !== null && declared !== 'unknown' ? declared : null;
   const hasTexts = texts.length > 0;
 
   return (
@@ -71,9 +114,11 @@ export default function Library() {
           >
             Library
           </h1>
-          {hasTexts && (
-            <p className="font-ui mb-0 mt-1 text-sm text-ink-400">
-              {texts.length === 1 ? '1 Text' : `${texts.length} Texts`}
+          {(hasTexts || answered) && (
+            <p className="font-ui mb-0 mt-1 flex flex-wrap items-baseline gap-x-2 text-sm text-ink-400">
+              {hasTexts && <span>{texts.length === 1 ? '1 Text' : `${texts.length} Texts`}</span>}
+              {hasTexts && answered && <span aria-hidden="true">·</span>}
+              {answered && <DeclaredLevelSetting declared={answered} onChanged={onLevelChanged} />}
             </p>
           )}
         </div>
@@ -97,6 +142,14 @@ export default function Library() {
             Try again
           </Button>
         </div>
+      )}
+
+      <p role="status" className={`font-ui text-sm text-ink-500 ${levelNews ? 'mb-6' : 'sr-only'}`}>
+        {levelNews}
+      </p>
+
+      {declared === null && (
+        <DeclaredLevelPrompt onDeclared={onAnswered} />
       )}
 
       {state.status === 'ready' && !hasTexts && <EmptyLibrary />}
