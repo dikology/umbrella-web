@@ -3,6 +3,7 @@
 import type { Ref } from 'react';
 import type { DictionaryEntry, Word } from '@/lib/api';
 import Button from './Button';
+import HskTag from './HskTag';
 import { CloseIcon } from './icons';
 
 /** Where a card sits in the Reader, measured from its Word. */
@@ -50,6 +51,7 @@ export default function WordCard({
 }: WordCardProps) {
   const entries = word?.entries ?? [];
   const parts = word?.parts ?? [];
+  const hskLevel = word?.hsk_level ?? null;
 
   return (
     <div
@@ -70,8 +72,11 @@ export default function WordCard({
       }
     >
       <div className="flex items-start gap-3 border-b border-paper-300 px-5 pb-4 pt-4">
-        <div lang="zh" className="font-han mr-auto min-w-0 break-words pt-0.5 text-3xl leading-tight text-ink-800">
-          {surface}
+        <div className="mr-auto flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 pt-0.5">
+          <div lang="zh" className="font-han min-w-0 break-words text-3xl leading-tight text-ink-800">
+            {surface}
+          </div>
+          {hskLevel !== null && <HskTag level={hskLevel} />}
         </div>
         <Button
           size="sm"

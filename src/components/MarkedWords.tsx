@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { ApiError, api, type MarkedWord, type Sighting } from '@/lib/api';
 import { formatDate } from '@/lib/format';
 import Button, { buttonClasses } from './Button';
+import HskTag from './HskTag';
 import { ChevronDownIcon } from './icons';
 import { markedWordClasses } from './marked-word';
 
@@ -242,11 +243,14 @@ function WordRow({
           </span>
           <span className="min-w-0 flex-1 pt-0.5">
             <span className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5">
-              {word.pinyin !== null ? (
-                <span className="text-lg text-ink-700">{word.pinyin}</span>
-              ) : (
-                <span className="italic text-ink-400">Not in the dictionary</span>
-              )}
+              <span className="flex flex-wrap items-center gap-x-2.5">
+                {word.pinyin !== null ? (
+                  <span className="text-lg text-ink-700">{word.pinyin}</span>
+                ) : (
+                  <span className="italic text-ink-400">Not in the dictionary</span>
+                )}
+                {word.hsk_level !== null && <HskTag level={word.hsk_level} />}
+              </span>
               <span className="font-ui shrink-0 text-xs text-ink-400">
                 Marked <time dateTime={word.marked_at} className="tabular-nums">{formatDate(word.marked_at)}</time>
               </span>
@@ -344,7 +348,10 @@ function splitSentence({ sentence, word_start, word_end }: Sighting) {
   ];
 }
 
-/** An unmarked Word, briefly: the row it leaves behind until it is undone or sent. */
+/**
+ * An unmarked Word, briefly: the row it leaves behind until it is undone or sent.
+ * Unmarking is the Learner saying they know the Word, so it becomes Known.
+ */
 function HeldRow({ word, onUndo }: { word: string; onUndo: () => void }) {
   const undoRef = useRef<HTMLButtonElement>(null);
   const descriptionId = useId();
@@ -354,7 +361,7 @@ function HeldRow({ word, onUndo }: { word: string; onUndo: () => void }) {
   return (
     <li className="flex items-center justify-between gap-4 border-b border-paper-300 bg-paper-200/60 py-3 pl-3 pr-1 sm:pl-4 sm:pr-2">
       <div id={descriptionId} className="font-ui text-sm text-ink-500">
-        Unmarked <span lang="zh" className="font-han text-base text-ink-700">{word}</span>
+        Unmarked <span lang="zh" className="font-han text-base text-ink-700">{word}</span>. It’s a Known Word now.
       </div>
       {/* Focus lands here, and the description says what Undo would undo. */}
       <button ref={undoRef} type="button" onClick={onUndo} aria-describedby={descriptionId} className={buttonClasses({ variant: 'ghost', size: 'sm' })}>

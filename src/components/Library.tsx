@@ -7,10 +7,11 @@ import { ApiError, api, type DeclaredLevel, type TextSummary } from '@/lib/api';
 import { formatDate } from '@/lib/format';
 import { hskLevelName, wordsCoveredBy } from '@/lib/hsk';
 import Button, { buttonClasses } from './Button';
+import CoverageLabel from './CoverageLabel';
 import DeclaredLevelPrompt from './DeclaredLevelPrompt';
 import DeclaredLevelSetting from './DeclaredLevelSetting';
 import DeleteTextDialog from './DeleteTextDialog';
-import { TrashIcon } from './icons';
+import { CheckIcon, TrashIcon } from './icons';
 
 type State =
   | { status: 'loading' }
@@ -177,6 +178,24 @@ export default function Library() {
                 <span lang="zh" className="font-han mt-1.5 block truncate text-ink-400">
                   {text.preview}
                 </span>
+                {(text.coverage || text.finished_at) && (
+                  <span className="font-ui mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-ink-500">
+                    {text.coverage && (
+                      <span>
+                        <CoverageLabel coverage={text.coverage} />
+                      </span>
+                    )}
+                    {text.finished_at && (
+                      <span className="inline-flex items-center gap-1 rounded-sm bg-paper-200 px-1.5 py-px font-medium leading-5 text-ink-600">
+                        <CheckIcon width={14} height={14} />
+                        Finished{' '}
+                        <time dateTime={text.finished_at} className="tabular-nums">
+                          {formatDate(text.finished_at)}
+                        </time>
+                      </span>
+                    )}
+                  </span>
+                )}
               </Link>
               <button
                 type="button"
