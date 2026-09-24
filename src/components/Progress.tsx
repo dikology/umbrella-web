@@ -83,7 +83,7 @@ function ProgressReport({ progress }: { progress: ProgressData }) {
       <Vocabulary days={progress.vocabulary} />
       <HskLevels levels={progress.hsk_levels} />
 
-      <p className="font-ui m-0 flex flex-wrap gap-x-2 border-t border-paper-300 pt-5 text-sm text-ink-500">
+      <p className="m-0 flex flex-wrap gap-x-2 border-t border-paper-300 pt-5 text-ink-500">
         <span>{plural(progress.texts_finished, 'Text finished', 'Texts finished')}</span>
         <span aria-hidden="true" className="text-ink-300">·</span>
         <span>{plural(progress.words_marked, 'Word marked', 'Words marked')}</span>
@@ -94,8 +94,10 @@ function ProgressReport({ progress }: { progress: ProgressData }) {
 
 /** The Vocabulary's size today, and how it got there. */
 function Vocabulary({ days }: { days: VocabularyDay[] }) {
-  // Finished Texts whose every Word was Marked leave the Vocabulary empty.
-  const today = days.at(-1) ?? { date: '', known: 0, declared: 0 };
+  // Empty when every Word of every finished Text was Marked: nothing Known yet.
+  const today = days.at(-1);
+  const known = today?.known ?? 0;
+  const declared = today?.declared ?? 0;
 
   return (
     <section aria-labelledby="vocabulary-title">
@@ -103,16 +105,15 @@ function Vocabulary({ days }: { days: VocabularyDay[] }) {
         Vocabulary
       </h2>
       <p className="mb-6 text-xl text-ink-600">
-        {plural(today.known, 'Known Word', 'Known Words')}
-        {today.declared > 0 && (
-          <span className="text-ink-500">, {formatCount(today.declared)} of them declared</span>
+        {plural(known, 'Known Word', 'Known Words')}
+        {declared > 0 && (
+          <span className="text-ink-500">, {formatCount(declared)} of them declared</span>
         )}
         .
       </p>
       {/* A line needs two days to be one. */}
-      {days.length > 1 ? (
-        <VocabularyChart days={days} />
-      ) : (
+      {days.length > 1 && <VocabularyChart days={days} />}
+      {days.length === 1 && (
         <p className="max-w-prose text-ink-500">
           Your Vocabulary’s line starts today. Come back after another day of reading to see it grow.
         </p>
@@ -121,7 +122,7 @@ function Vocabulary({ days }: { days: VocabularyDay[] }) {
   );
 }
 
-/** Each HSK Level as Known against its size: coverage of the syllabus, never a verdict. */
+/** Each HSK Level as Known against its size: how much of each level, never a verdict. */
 function HskLevels({ levels }: { levels: HskLevelProgress[] }) {
   return (
     <section aria-labelledby="hsk-levels-title">

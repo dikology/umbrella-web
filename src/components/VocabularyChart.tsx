@@ -14,7 +14,7 @@ import {
   type TooltipValueType,
 } from 'recharts';
 import type { VocabularyDay } from '@/lib/api';
-import { formatCount } from '@/lib/format';
+import { formatCount, formatDay, formatShortDay } from '@/lib/format';
 
 // The page's one vermilion mark: the Vocabulary itself. The declared part is paper
 // and pencil hatching, so it reads as set apart without a second hue (DESIGN.md
@@ -25,15 +25,6 @@ const DECLARED_INK = '#A8A297'; // ink-300
 const GRID = '#EDE7D8'; // paper-300
 const AXIS_TEXT = '#6B6456'; // ink-400
 const SURFACE = '#FAF8F0'; // paper-100
-
-// A day as the API writes it, "2026-09-04", is a calendar day where the Learner is,
-// so it's read as local midnight rather than UTC's.
-const dayOf = (date: string) => {
-  const [year, month, day] = date.split('-').map(Number);
-  return new Date(year, month - 1, day);
-};
-const shortDay = new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric' });
-const longDay = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' });
 
 // Round ticks from 0: four steps of 1, 2, 2.5 or 5 times a power of ten.
 function roundTicks(max: number) {
@@ -82,7 +73,7 @@ export default function VocabularyChart({ days }: { days: VocabularyDay[] }) {
             <CartesianGrid vertical={false} stroke={GRID} />
             <XAxis
               dataKey="date"
-              tickFormatter={(date: string) => shortDay.format(dayOf(date))}
+              tickFormatter={formatShortDay}
               tick={{ fill: AXIS_TEXT, fontSize: 12 }}
               tickLine={false}
               axisLine={{ stroke: GRID }}
@@ -114,6 +105,7 @@ export default function VocabularyChart({ days }: { days: VocabularyDay[] }) {
                 strokeWidth={1}
                 activeDot={false}
                 isAnimationActive={false}
+                label={<DeclaredLabel lastIndex={days.length - 1} />}
               />
             )}
             <Line
@@ -148,7 +140,7 @@ export default function VocabularyChart({ days }: { days: VocabularyDay[] }) {
               {days.map((day) => (
                 <tr key={day.date} className="border-t border-paper-300">
                   <th scope="row" className="px-4 py-1.5 font-normal text-ink-600">
-                    <time dateTime={day.date}>{longDay.format(dayOf(day.date))}</time>
+                    <time dateTime={day.date}>{formatDay(day.date)}</time>
                   </th>
                   <td className="px-4 py-1.5 text-right text-ink-700">{formatCount(day.known)}</td>
                   <td className="px-4 py-1.5 text-right">{formatCount(day.declared)}</td>
@@ -162,13 +154,23 @@ export default function VocabularyChart({ days }: { days: VocabularyDay[] }) {
   );
 }
 
+/** "Declared", set inside the band's right end, so the band names itself where it lies. */
+function DeclaredLabel({ lastIndex, index, x, y }: { lastIndex: number; index?: number; x?: number; y?: number }) {
+  if (index !== lastIndex || x === undefined || y === undefined) return null;
+  return (
+    <text x={x - 8} y={y + 18} textAnchor="end" fill={AXIS_TEXT} fontSize={12} fontWeight={500}>
+      Declared
+    </text>
+  );
+}
+
 /** One day's values under the crosshair: the numbers lead, the names follow. */
 function DayReadout({ active, payload }: TooltipContentProps<TooltipValueType, string | number>) {
   const day = payload?.[0]?.payload as VocabularyDay | undefined;
   if (!active || !day) return null;
   return (
     <div className="font-ui rounded-lg border border-paper-300 bg-paper-50 px-3 py-2 text-xs text-ink-500 shadow-md">
-      <div className="mb-1 text-ink-400">{longDay.format(dayOf(day.date))}</div>
+      <div className="mb-1 text-ink-400">{formatDay(day.date)}</div>
       <div className="flex items-center gap-2">
         <span aria-hidden="true" className="inline-block h-0.5 w-3 rounded-sm" style={{ background: KNOWN }} />
         <span className="text-sm font-semibold tabular-nums text-ink-800">{formatCount(day.known)}</span>

@@ -169,7 +169,7 @@ test("Progress reads each HSK Level as Known against its size, beside what was f
   expect(texts_finished).toBeGreaterThan(0);
   await expect(page.getByText(`${texts_finished} ${texts_finished === 1 ? "Text" : "Texts"} finished`)).toBeVisible();
   await expect(page.getByText(`${words_marked} ${words_marked === 1 ? "Word" : "Words"} marked`)).toBeVisible();
-  // Coverage per level, never a verdict on the Learner.
+  // Known against each level's size, never a verdict on the Learner.
   await expect(page.getByText(/You are HSK/i)).toHaveCount(0);
 });
 
@@ -216,6 +216,8 @@ test("the Vocabulary is drawn over time, with its declared part set apart from r
   // Identity never rests on color alone: both parts are named beside their marks.
   await expect(chart).toContainText("Known Words");
   await expect(chart).toContainText("Declared");
+  // And the band names itself where it lies, not only in the legend.
+  await expect(chart.locator("svg.recharts-surface")).toContainText("Declared");
 
   // Every day is reachable without hovering.
   await chart.getByText("Show as a table").click();
@@ -242,4 +244,18 @@ test("a Progress that doesn't load says so, and tries again", async ({ page }) =
   failing = false;
   await page.getByRole("button", { name: "Try again" }).click();
   await expect(page.getByRole("region", { name: "Vocabulary" })).toContainText("1,310 Known Words");
+});
+
+test("a Learner who finished Texts but marked every Word sees an empty Vocabulary, not a line about to start", async ({ page }) => {
+  await page.route(/\/api\/v1\/progress\?/, (route) =>
+    route.fulfill({ json: { ...history, vocabulary: [], texts_finished: 2, words_marked: 9 } }),
+  );
+  await page.goto("/space/progress");
+
+  const vocabulary = page.getByRole("region", { name: "Vocabulary" });
+  await expect(vocabulary).toContainText("0 Known Words");
+  await expect(vocabulary).not.toContainText("starts today");
+  await expect(vocabulary.getByRole("figure")).toHaveCount(0);
+  await expect(page.getByText("2 Texts finished")).toBeVisible();
+  await expect(page.getByText("9 Words marked")).toBeVisible();
 });
