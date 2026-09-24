@@ -4,3 +4,10 @@ const dateFormat = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' });
 export function formatDate(iso: string) {
   return dateFormat.format(new Date(iso));
 }
+
+const countFormat = new Intl.NumberFormat();
+
+/** A count as a Learner reads a number in their own locale: 1,240. */
+export function formatCount(count: number) {
+  return countFormat.format(count);
+}
