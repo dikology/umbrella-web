@@ -155,6 +155,35 @@ export type MarkedWord = z.infer<typeof markedWordSchema>;
 
 export const markedWordsSchema = z.object({ marked_words: z.array(markedWordSchema) });
 
+// The Vocabulary's size at the end of one day, in the Learner's time zone. `declared`
+// is the part of `known` holding a declared Ground; the rest was read or unmarked.
+export const vocabularyDaySchema = z.object({
+  date: z.string(),
+  known: z.number(),
+  declared: z.number(),
+});
+export type VocabularyDay = z.infer<typeof vocabularyDaySchema>;
+
+// How many of one HSK Level's Words the Learner knows, against the level's size.
+export const hskLevelProgressSchema = z.object({
+  level: hskLevelSchema,
+  known: z.number(),
+  size: z.number(),
+});
+export type HskLevelProgress = z.infer<typeof hskLevelProgressSchema>;
+
+// A Learner's progress. There is deliberately no single HSK Level in it.
+export const progressSchema = z.object({
+  // One day per calendar day from the first Known Word to today, oldest first;
+  // empty while the Learner knows no Word.
+  vocabulary: z.array(vocabularyDaySchema),
+  // Every HSK Level in order, 1-6 and then "advanced".
+  hsk_levels: z.array(hskLevelProgressSchema),
+  texts_finished: z.number(),
+  words_marked: z.number(),
+});
+export type Progress = z.infer<typeof progressSchema>;
+
 // Mirror umbrella-api's TITLE_MAX_LENGTH and BODY_MAX_LENGTH. The API counts
 // code points, not UTF-16 units, so an astral Han character counts once here too.
 export const TITLE_MAX_LENGTH = 200;
@@ -254,4 +283,7 @@ export const api = {
   unmarkWord: (simplified: string, { keepalive = false } = {}) =>
     request<void>(`/marked-words/${encodeURIComponent(simplified)}`, { method: "DELETE", keepalive }),
   listMarkedWords: () => request("/marked-words", { method: "GET" }, markedWordsSchema),
+  // Days are counted in `tz`, so a Word Known at 01:00 lands on the Learner's today.
+  progress: (tz: string) =>
+    request(`/progress?tz=${encodeURIComponent(tz)}`, { method: "GET" }, progressSchema),
 };

@@ -6,8 +6,10 @@ import { signUp } from "./signup";
 // runs: 6 running Words (我 喜欢 北京 你 喜欢 北京), 4 distinct.
 const BODY = "我喜欢北京。你喜欢北京。";
 
-// One Learner for the whole file: signups are rate-limited. Each test adds its own
-// Text, but Known Words belong to the Learner, so the tests run in order.
+// One Learner for the whole file: signups are rate-limited, and the suite is at the
+// API's limit of 10 a minute. Each test adds its own Text, but Known Words belong to
+// the Learner, so the tests run in order. The Progress page is tested here too, on
+// the same Learner: empty before anything is finished, and against the API after.
 test.describe.configure({ mode: "serial" });
 
 let cookies: Awaited<ReturnType<BrowserContext["cookies"]>>;
@@ -37,6 +39,21 @@ const word = (page: Page, surface: string) => text(page).getByRole("button", { n
 // The live Coverage in the Reader's header; the one by the Finish button repeats it quietly.
 const coverage = (page: Page) => page.locator("article header").getByRole("status");
 const finishing = (page: Page) => page.getByRole("region", { name: "Finish this Text" });
+
+const nav = (page: Page) => page.getByRole("navigation", { name: "Learner Space" });
+
+test("before anything is declared or finished, Progress points the Learner to the Library", async ({ page }) => {
+  await page.goto("/space");
+  await nav(page).getByRole("link", { name: "Progress" }).click();
+
+  await expect(page).toHaveURL(/\/space\/progress$/);
+  await expect(page.getByRole("heading", { name: "Progress", level: 1 })).toBeVisible();
+  await expect(nav(page).getByRole("link", { name: "Progress" })).toHaveAttribute("aria-current", "page");
+  await expect(page.getByRole("heading", { name: "Your Vocabulary starts with your first Text." })).toBeVisible();
+
+  await page.getByRole("link", { name: "Go to your Library" }).click();
+  await expect(page).toHaveURL(/\/space$/);
+});
 
 test("a Word's HSK Level shows in its popover", async ({ page }) => {
   await openNewText(page, "HSK");
@@ -128,4 +145,117 @@ test("Marked Words show their HSK Level, and unmarking says the Word becomes Kno
   await expect(page.getByRole("button", { name: "Undo" })).toHaveAccessibleDescription(
     "Unmarked 北京. It’s a Known Word now.",
   );
+});
+
+test("Progress reads each HSK Level as Known against its size, beside what was finished and marked", async ({ page }) => {
+  expect((await page.request.put("/api/v1/me/declared-level", { data: { level: 1 } })).ok()).toBe(true);
+  await page.goto("/space/progress");
+
+  // Everything became Known today, and one day is not a line yet.
+  const vocabulary = page.getByRole("region", { name: "Vocabulary" });
+  await expect(vocabulary).toContainText("of them declared");
+  await expect(vocabulary).toContainText("Your Vocabulary’s line starts today.");
+  await expect(vocabulary.getByRole("figure")).toHaveCount(0);
+
+  const { hsk_levels, texts_finished, words_marked } = await (await page.request.get("/api/v1/progress")).json();
+  const levels = page.getByRole("list", { name: "HSK Levels" }).getByRole("listitem");
+  await expect(levels).toHaveCount(7);
+  const names = ["HSK 1", "HSK 2", "HSK 3", "HSK 4", "HSK 5", "HSK 6", "Advanced"];
+  for (const [i, { known, size }] of hsk_levels.entries()) {
+    await expect(levels.nth(i)).toContainText(names[i]);
+    await expect(levels.nth(i)).toContainText(`${known.toLocaleString("en")} of ${size.toLocaleString("en")} Known`);
+  }
+
+  expect(texts_finished).toBeGreaterThan(0);
+  await expect(page.getByText(`${texts_finished} ${texts_finished === 1 ? "Text" : "Texts"} finished`)).toBeVisible();
+  await expect(page.getByText(`${words_marked} ${words_marked === 1 ? "Word" : "Words"} marked`)).toBeVisible();
+  // Known against each level's size, never a verdict on the Learner.
+  await expect(page.getByText(/You are HSK/i)).toHaveCount(0);
+});
+
+// For the Progress page, a history no new Learner has yet, standing in for the API's
+// answer: HSK 1 declared on the first day, raised to HSK 3 on the fourth, and reading
+// throughout.
+const history = {
+  vocabulary: [
+    { date: "2026-09-01", known: 300, declared: 300 },
+    { date: "2026-09-02", known: 300, declared: 300 },
+    { date: "2026-09-03", known: 342, declared: 300 },
+    { date: "2026-09-04", known: 1240, declared: 812 },
+    { date: "2026-09-05", known: 1310, declared: 812 },
+  ],
+  hsk_levels: [
+    { level: 1, known: 300, size: 300 },
+    { level: 2, known: 200, size: 200 },
+    { level: 3, known: 312, size: 500 },
+    { level: 4, known: 0, size: 1000 },
+    { level: 5, known: 0, size: 1071 },
+    { level: 6, known: 0, size: 1140 },
+    { level: "advanced", known: 0, size: 5636 },
+  ],
+  texts_finished: 3,
+  words_marked: 41,
+};
+
+test("the Vocabulary is drawn over time, with its declared part set apart from reading", async ({ page }) => {
+  let asked: URL | undefined;
+  await page.route(/\/api\/v1\/progress\?/, (route) => {
+    asked = new URL(route.request().url());
+    return route.fulfill({ json: history });
+  });
+  await page.goto("/space/progress");
+
+  const vocabulary = page.getByRole("region", { name: "Vocabulary" });
+  await expect(vocabulary).toContainText("1,310 Known Words");
+  await expect(vocabulary).toContainText("812 of them declared");
+  // Days are counted where the Learner is.
+  expect(asked?.searchParams.get("tz")).toBe(await page.evaluate(() => Intl.DateTimeFormat().resolvedOptions().timeZone));
+
+  const chart = vocabulary.getByRole("figure");
+  await expect(chart.locator("svg.recharts-surface")).toBeVisible();
+  // Identity never rests on color alone: both parts are named beside their marks.
+  await expect(chart).toContainText("Known Words");
+  await expect(chart).toContainText("Declared");
+  // And the band names itself where it lies, not only in the legend.
+  await expect(chart.locator("svg.recharts-surface")).toContainText("Declared");
+
+  // Every day is reachable without hovering.
+  await chart.getByText("Show as a table").click();
+  const rows = chart.getByRole("table").getByRole("row");
+  await expect(rows).toHaveCount(history.vocabulary.length + 1);
+  await expect(rows.last()).toContainText("1,310");
+  await expect(rows.last()).toContainText("812");
+
+  // Hovering a day reads its values out.
+  const plot = chart.locator("svg.recharts-surface");
+  const box = (await plot.boundingBox())!;
+  await page.mouse.move(box.x + box.width - 20, box.y + box.height / 2);
+  await expect(chart.locator(".recharts-tooltip-wrapper")).toContainText("1,310");
+});
+
+test("a Progress that doesn't load says so, and tries again", async ({ page }) => {
+  let failing = true;
+  await page.route(/\/api\/v1\/progress\?/, (route) =>
+    failing ? route.fulfill({ status: 503, body: "" }) : route.fulfill({ json: history }),
+  );
+  await page.goto("/space/progress");
+
+  await expect(page.getByRole("alert").filter({ hasText: "Your Progress didn’t load" })).toBeVisible();
+  failing = false;
+  await page.getByRole("button", { name: "Try again" }).click();
+  await expect(page.getByRole("region", { name: "Vocabulary" })).toContainText("1,310 Known Words");
+});
+
+test("a Learner who finished Texts but marked every Word sees an empty Vocabulary, not a line about to start", async ({ page }) => {
+  await page.route(/\/api\/v1\/progress\?/, (route) =>
+    route.fulfill({ json: { ...history, vocabulary: [], texts_finished: 2, words_marked: 9 } }),
+  );
+  await page.goto("/space/progress");
+
+  const vocabulary = page.getByRole("region", { name: "Vocabulary" });
+  await expect(vocabulary).toContainText("0 Known Words");
+  await expect(vocabulary).not.toContainText("starts today");
+  await expect(vocabulary.getByRole("figure")).toHaveCount(0);
+  await expect(page.getByText("2 Texts finished")).toBeVisible();
+  await expect(page.getByText("9 Words marked")).toBeVisible();
 });

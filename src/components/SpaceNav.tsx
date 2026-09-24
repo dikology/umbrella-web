@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 const PLACES = [
   { href: '/space', label: 'Library', current: (path: string) => path === '/space' || path.startsWith('/space/texts') },
   { href: '/space/words', label: 'Marked Words', current: (path: string) => path.startsWith('/space/words') },
+  { href: '/space/progress', label: 'Progress', current: (path: string) => path.startsWith('/space/progress') },
 ];
 
 /** Where a Learner can go in their Learner Space. */
