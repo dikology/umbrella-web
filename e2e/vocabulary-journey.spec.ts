@@ -1,7 +1,8 @@
 import { expect, test, type Page } from "@playwright/test";
 import { signUp } from "./signup";
 
-// The Known Words loop, through the UI alone: declare, read, mark, finish, unmark.
+// The Known Words loop, through the UI: declare, read, mark, finish, unmark. The API
+// is asked only for the HSK Levels' sizes, which depend on the syllabus it loaded.
 // Every Word here has a Dictionary Entry in umbrella-api's CEDICT fixture, which CI
 // loads, so all 6 running Words (我 在 銀行 我 喜欢 上海) count toward Coverage. With
 // HSK 1 declared, 我 在 喜欢 are Known; 银行 is HSK 2 and 上海 is in no HSK Level.
@@ -9,13 +10,13 @@ const TITLE = "去上海";
 const BODY = "我在銀行。我喜欢上海。";
 
 // This file's one signup counts toward the API's limit of 10 a minute, which the
-// suite as a whole must stay under: it makes 10.
+// suite as a whole must not exceed: it makes 10.
 
 const nav = (page: Page) => page.getByRole("navigation", { name: "Learner Space" });
 const vocabulary = (page: Page) => page.getByRole("region", { name: "Vocabulary" });
-const level = (page: Page, name: string) =>
+const hskLevel = (page: Page, name: string) =>
   page.getByRole("list", { name: "HSK Levels" }).getByRole("listitem").filter({ hasText: name });
-const count = (n: number) => n.toLocaleString("en");
+const grouped = (n: number) => n.toLocaleString("en");
 
 test("declare HSK 1, read a Text, mark a Word, finish it, and watch the Vocabulary grow", async ({ page }) => {
   await signUp(page);
@@ -29,13 +30,13 @@ test("declare HSK 1, read a Text, mark a Word, finish it, and watch the Vocabula
 
   await nav(page).getByRole("link", { name: "Progress" }).click();
   await expect(page.getByRole("list", { name: "HSK Levels" })).toBeVisible();
-  // Each level's size is the syllabus's, whichever one the API loaded.
   const { hsk_levels } = await (await page.request.get("/api/v1/progress")).json();
-  const [hsk1, hsk2] = hsk_levels.map((l: { size: number }) => l.size);
-  await expect(vocabulary(page)).toContainText(`${count(hsk1)} Known Words`);
-  await expect(vocabulary(page)).toContainText(`${count(hsk1)} of them declared`);
-  await expect(level(page, "HSK 1")).toContainText(`${count(hsk1)} of ${count(hsk1)} Known`);
-  await expect(level(page, "HSK 2")).toContainText(`0 of ${count(hsk2)} Known`);
+  const sizeOf = (level: number) => hsk_levels.find((l: { level: number | string }) => l.level === level).size as number;
+  const [hsk1, hsk2] = [sizeOf(1), sizeOf(2)];
+  await expect(vocabulary(page)).toContainText(`${grouped(hsk1)} Known Words`);
+  await expect(vocabulary(page)).toContainText(`${grouped(hsk1)} of them declared`);
+  await expect(hskLevel(page, "HSK 1")).toContainText(`${grouped(hsk1)} of ${grouped(hsk1)} Known`);
+  await expect(hskLevel(page, "HSK 2")).toContainText(`0 of ${grouped(hsk2)} Known`);
 
   // 2. A pasted Text shows its Coverage in the Library: 4 of 6 running Words.
   await nav(page).getByRole("link", { name: "Library" }).click();
@@ -50,7 +51,7 @@ test("declare HSK 1, read a Text, mark a Word, finish it, and watch the Vocabula
   await expect(listed).toContainText("66% Coverage · too hard");
   await expect(listed).not.toContainText("Finished");
 
-  // 3. Marking a declared Word takes it out of the Known: 3 of 6.
+  // 3. Marking a declared Word makes it no longer a Known Word: 3 of 6.
   await listed.getByRole("link", { name: new RegExp(TITLE) }).click();
   const text = page.locator('[lang="zh"]').filter({ hasText: "上海" });
   const word = (surface: string) => text.getByRole("button", { name: surface, exact: true });
@@ -63,7 +64,7 @@ test("declare HSK 1, read a Text, mark a Word, finish it, and watch the Vocabula
   await expect(coverage).toHaveText("50% Coverage · too hard");
   await page.keyboard.press("Escape");
 
-  // 4. Finishing makes the two Words not yet Known Known, and leaves 喜欢 marked: 5 of 6.
+  // 4. Finishing makes Known Words of the two that weren't, and leaves 喜欢 marked: 5 of 6.
   const finishing = page.getByRole("region", { name: "Finish this Text" });
   await finishing.getByRole("button", { name: "Finish", exact: true }).click();
   await expect(finishing.getByRole("status")).toHaveText("Finished. 2 Words became Known.");
@@ -75,14 +76,15 @@ test("declare HSK 1, read a Text, mark a Word, finish it, and watch the Vocabula
 
   // 5. The Vocabulary grew by what was read, less what was marked.
   await nav(page).getByRole("link", { name: "Progress" }).click();
-  await expect(vocabulary(page)).toContainText(`${count(hsk1 + 1)} Known Words`);
-  await expect(vocabulary(page)).toContainText(`${count(hsk1 - 1)} of them declared`);
-  await expect(level(page, "HSK 1")).toContainText(`${count(hsk1 - 1)} of ${count(hsk1)} Known`);
-  await expect(level(page, "HSK 2")).toContainText(`1 of ${count(hsk2)} Known`);
+  await expect(page).toHaveURL(/\/space\/progress$/);
+  await expect(vocabulary(page)).toContainText(`${grouped(hsk1 + 1)} Known Words`);
+  await expect(vocabulary(page)).toContainText(`${grouped(hsk1 - 1)} of them declared`);
+  await expect(hskLevel(page, "HSK 1")).toContainText(`${grouped(hsk1 - 1)} of ${grouped(hsk1)} Known`);
+  await expect(hskLevel(page, "HSK 2")).toContainText(`1 of ${grouped(hsk2)} Known`);
   await expect(page.getByText("1 Text finished")).toBeVisible();
   await expect(page.getByText("1 Word marked")).toBeVisible();
 
-  // 6. Unmarking 喜欢 makes it Known again, read rather than declared.
+  // 6. Unmarking 喜欢 makes it Known again, as unmarked rather than declared.
   await nav(page).getByRole("link", { name: "Marked Words" }).click();
   await page.getByRole("button", { name: "Unmark 喜欢" }).click();
   await expect(page.getByRole("button", { name: "Undo" })).toHaveAccessibleDescription(
@@ -97,7 +99,8 @@ test("declare HSK 1, read a Text, mark a Word, finish it, and watch the Vocabula
   expect((await unmarked).ok()).toBe(true);
   await page.reload();
 
-  await expect(vocabulary(page)).toContainText(`${count(hsk1 + 2)} Known Words`);
-  await expect(level(page, "HSK 1")).toContainText(`${count(hsk1)} of ${count(hsk1)} Known`);
+  await expect(vocabulary(page)).toContainText(`${grouped(hsk1 + 2)} Known Words`);
+  await expect(vocabulary(page)).toContainText(`${grouped(hsk1 - 1)} of them declared`);
+  await expect(hskLevel(page, "HSK 1")).toContainText(`${grouped(hsk1)} of ${grouped(hsk1)} Known`);
   await expect(page.getByText("0 Words marked")).toBeVisible();
 });
