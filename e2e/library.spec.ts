@@ -2,16 +2,6 @@ import { expect, test, type BrowserContext } from "@playwright/test";
 import { fontFamily, leadsWith } from "./fonts";
 import { signUp } from "./signup";
 
-test("a new Learner's Library is empty and leads to adding a first Text", async ({ page }) => {
-  await signUp(page);
-
-  await expect(page.getByRole("heading", { name: "Library", level: 1 })).toBeVisible();
-  await page.getByRole("link", { name: "Add your first Text" }).click();
-
-  await expect(page).toHaveURL(/\/space\/texts\/new$/);
-  await expect(page.getByRole("heading", { name: "Add a Text", level: 1 })).toBeVisible();
-});
-
 const POEM = "春眠不觉晓，\n处处闻啼鸟。\n夜来风雨声，\n花落知多少。";
 
 test("adding a Text lands in it, and the Library lists it", async ({ page }) => {
@@ -35,8 +25,8 @@ test("adding a Text lands in it, and the Library lists it", async ({ page }) => 
   await expect(page.getByRole("link", { name: /春晓/ })).toBeVisible();
 });
 
-// These two share a Learner, to keep the suite under the API's limit of 10 signups
-// a minute. The first adds nothing, so the second still starts from an empty Library.
+// These three share a Learner, to keep the suite under the API's limit of 10 signups
+// a minute. The first two add nothing, so each starts from an empty Library.
 test.describe("with one Learner", () => {
   test.describe.configure({ mode: "serial" });
 
@@ -51,6 +41,16 @@ test.describe("with one Learner", () => {
 
   test.beforeEach(async ({ page }) => {
     await page.context().addCookies(cookies);
+  });
+
+  test("a new Learner's Library is empty and leads to adding a first Text", async ({ page }) => {
+    await page.goto("/space");
+
+    await expect(page.getByRole("heading", { name: "Library", level: 1 })).toBeVisible();
+    await page.getByRole("link", { name: "Add your first Text" }).click();
+
+    await expect(page).toHaveURL(/\/space\/texts\/new$/);
+    await expect(page.getByRole("heading", { name: "Add a Text", level: 1 })).toBeVisible();
   });
 
   test("a Text with no Chinese in it is refused before it is sent", async ({ page }) => {

@@ -9,7 +9,7 @@ const TITLE = "在银行";
 const BODY = "我在銀行。\n今天天气很好，我喜欢北京。";
 
 // This file's one signup counts toward the API's limit of 10 a minute, which the
-// suite as a whole must stay under: it makes 8.
+// suite as a whole must stay under: it makes 10.
 
 test("paste a Text, tap a Word for its Dictionary Entries, mark it, and keep it after the Text is gone", async ({ page }) => {
   await signUp(page);
