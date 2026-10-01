@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import LogoutButton from "@/components/LogoutButton";
 import SpaceNav from "@/components/SpaceNav";
+import { fetchMe } from "@/lib/session";
 
 export const metadata = {
   title: "Your space - Umbrella",
@@ -12,13 +12,7 @@ export const metadata = {
 // Authoritative gate: ask the API who we are, forwarding the cookie. The
 // proxy's token decode is only a hint (ADR-0002); this response is the truth.
 export default async function SpaceLayout({ children }: { children: React.ReactNode }) {
-  const cookieHeader = (await cookies()).toString();
-  const origin = process.env.API_ORIGIN ?? "http://localhost:8000";
-
-  const response = await fetch(`${origin}/api/v1/me`, {
-    headers: { cookie: cookieHeader },
-    cache: "no-store",
-  });
+  const response = await fetchMe();
   if (response.status === 401) redirect("/login");
   if (!response.ok) throw new Error(`GET /api/v1/me failed with ${response.status}`);
 
