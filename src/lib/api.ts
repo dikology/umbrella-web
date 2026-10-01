@@ -230,18 +230,50 @@ export class ApiError extends Error {
   }
 }
 
+// The API's refresh runs once at a time: requests that find the access token
+// expired together wait on the same refresh rather than each rotating the session.
+let refreshing: Promise<Response | null> | null = null;
+
+function refreshSession(): Promise<Response | null> {
+  refreshing ??= fetch("/api/v1/auth/refresh", { method: "POST", credentials: "include" })
+    .catch(() => null)
+    .finally(() => {
+      refreshing = null;
+    });
+  return refreshing;
+}
+
 async function request<T>(
   path: string,
   init: { method: string; body?: unknown; keepalive?: boolean },
   schema?: z.ZodType<T>,
 ): Promise<T> {
-  const response = await fetch(`/api/v1${path}`, {
-    method: init.method,
-    credentials: "include",
-    keepalive: init.keepalive,
-    headers: init.body === undefined ? undefined : { "Content-Type": "application/json" },
-    body: init.body === undefined ? undefined : JSON.stringify(init.body),
-  });
+  const send = () =>
+    fetch(`/api/v1${path}`, {
+      method: init.method,
+      credentials: "include",
+      keepalive: init.keepalive,
+      headers: init.body === undefined ? undefined : { "Content-Type": "application/json" },
+      body: init.body === undefined ? undefined : JSON.stringify(init.body),
+    });
+
+  let response = await send();
+
+  // The access token lives 15 minutes and a page can stay open for longer: refresh
+  // the session once and ask again. A 401 from an auth endpoint is its own answer.
+  if (response.status === 401 && !path.startsWith("/auth/")) {
+    const refreshed = await refreshSession();
+    if (refreshed?.ok) {
+      response = await send();
+    } else if (refreshed?.status === 401) {
+      // The session is over. The 401 is still thrown, for callers that clean up.
+      window.location.assign("/login");
+    } else {
+      // The refresh itself failed (rate-limited, or the API is unreachable): the
+      // session may well be good, so this is a failure to retry, not a logout.
+      throw new ApiError(refreshed?.status ?? 503, "refresh_failed", "Request failed.");
+    }
+  }
 
   if (!response.ok) {
     const envelope = errorEnvelopeSchema.safeParse(await response.json().catch(() => null));
