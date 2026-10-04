@@ -18,6 +18,14 @@ export async function proxy(request: NextRequest) {
   const signedOut = () =>
     isSpace ? NextResponse.redirect(new URL("/login", request.url)) : NextResponse.next();
 
+  // The landing page is for visitors. A refresh token is a hint that this one has a
+  // Session, so they go to /space, which decides for real and refreshes if it must.
+  if (request.nextUrl.pathname === "/") {
+    return request.cookies.has(REFRESH_COOKIE)
+      ? NextResponse.redirect(new URL("/space", request.url))
+      : NextResponse.next();
+  }
+
   if (hasUnexpiredAccessToken(request.cookies.get(ACCESS_COOKIE)?.value)) {
     return NextResponse.next();
   }
@@ -65,6 +73,39 @@ async function refreshSession(request: NextRequest): Promise<Response | null> {
   }
 }
 
+// A prefetch never reaches the proxy, so it never rotates the Session: links are
+// prefetched several at a time, and each would spend the same refresh token. It has
+// to be said here because Next strips these headers before `proxy` runs, and once
+// per source because the matcher must be static.
 export const config = {
-  matcher: ["/space", "/space/:path*", "/login", "/signup"],
+  matcher: [
+    {
+      source: "/",
+      missing: [
+        { type: "header", key: "next-router-prefetch" },
+        { type: "header", key: "next-router-segment-prefetch" },
+      ],
+    },
+    {
+      source: "/space/:path*",
+      missing: [
+        { type: "header", key: "next-router-prefetch" },
+        { type: "header", key: "next-router-segment-prefetch" },
+      ],
+    },
+    {
+      source: "/login",
+      missing: [
+        { type: "header", key: "next-router-prefetch" },
+        { type: "header", key: "next-router-segment-prefetch" },
+      ],
+    },
+    {
+      source: "/signup",
+      missing: [
+        { type: "header", key: "next-router-prefetch" },
+        { type: "header", key: "next-router-segment-prefetch" },
+      ],
+    },
+  ],
 };

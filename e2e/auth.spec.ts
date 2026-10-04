@@ -88,6 +88,49 @@ test("a logged-in visitor to /login or /signup is sent to /space", async () => {
   await expect(page).toHaveURL(/\/space$/);
 });
 
+test("a Learner who opens the landing page is sent to /space, however old the access token", async () => {
+  await page.goto("/");
+  await expect(page).toHaveURL(/\/space$/);
+
+  await expireAccessToken();
+  await page.goto("/");
+  await expect(page).toHaveURL(/\/space$/);
+  await expect(page.getByRole("button", { name: "Log out" })).toBeVisible();
+});
+
+test("a prefetch leaves the Session alone, and the Learner is still in afterwards", async () => {
+  await expireAccessToken();
+  const refreshToken = await cookieValue("ub_refresh");
+
+  // What Next sends for every link in view, several at once.
+  const prefetches = await Promise.all(
+    ["/login", "/signup", "/space/words"].map((path) =>
+      context.request.get(path, { headers: { rsc: "1", "next-router-prefetch": "1" } }),
+    ),
+  );
+  for (const prefetch of prefetches) expect(prefetch.ok()).toBe(true);
+  expect(await cookieValue("ub_refresh")).toBe(refreshToken);
+  expect(await cookieValue("ub_access")).toBeUndefined();
+
+  await page.goto("/space");
+  await expect(page).toHaveURL(/\/space$/);
+  expect(await cookieValue("ub_refresh")).not.toBe(refreshToken);
+});
+
+test("a link followed inside /space after the access token expired still lands", async () => {
+  await page.goto("/space");
+  await expireAccessToken();
+
+  // Hovering has Next prefetch the link again, now without an access token.
+  const words = page.getByRole("navigation").getByRole("link", { name: "Words" });
+  await words.hover();
+  await page.waitForTimeout(500);
+  await words.click();
+
+  await expect(page).toHaveURL(/\/space\/words$/);
+  await expect(page.getByRole("button", { name: "Log out" })).toBeVisible();
+});
+
 test("once the refresh token is no good either, the Learner lands on /login", async () => {
   const session = (await context.cookies()).filter((cookie) => cookie.name.startsWith("ub_"));
   const { domain, path } = session.find((cookie) => cookie.name === "ub_refresh")!;
